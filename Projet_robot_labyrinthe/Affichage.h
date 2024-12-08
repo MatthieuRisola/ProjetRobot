@@ -10,10 +10,10 @@ public:
     virtual ~Affichage() = default;
 
     //affichage sans le robot pour la selection
-    virtual void afficherSansRobot(const Labyrinthe& labyrinthe) const = 0;
+    virtual void afficheSansRobot(const Labyrinthe& labyrinthe) const = 0;
 
     //affichage initial du labyrinthe
-    virtual void afficherDepart(const Labyrinthe& labyrinthe, const Robot& robot) const = 0;
+    virtual void afficheDepart(const Labyrinthe& labyrinthe, const Robot& robot) const = 0;
 
     //mise a jour du labyrinthe apres un deplacement du robot
     virtual void update(int ancienX, int ancienY, int nouveauX, int nouveauY, int direction) const = 0;
@@ -22,9 +22,9 @@ public:
 
 class AffichageTexteSimple : public Affichage {
 public:
-    void afficherSansRobot(const Labyrinthe& labyrinthe) const override;
+    void afficheSansRobot(const Labyrinthe& labyrinthe) const override;
 
-    //void afficherDepart(const Labyrinthe& labyrinthe, const Robot& robot) const override;
+    void afficheDepart(const Labyrinthe& labyrinthe, const Robot& robot) const override;
 
     //void update(int ancienX, int ancienY, int nouveauX, int nouveauY, int direction) const override;
 };
