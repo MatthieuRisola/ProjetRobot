@@ -8,8 +8,6 @@
 class Labyrinthe;
 class Affichage;
 
-enum Direction {HAUT = 1, DROITE = 2, BAS = 3, GAUCHE = 4};
-
 class Robot {
 public:
 
@@ -28,7 +26,7 @@ public:
     void affiche(const Affichage &aff);
 
     void ajouteObservateur(std::unique_ptr<Observateur> obs);
-    //void enleveObservateur(Observateur* obs); //TODO si nécessaire
+    //void enleveObservateur(Observateur* obs); //TODO si nÃ©cessaire
 private:
     int d_x, d_y, d_direction;
     std::vector<std::unique_ptr<Observateur>> d_observateurs;
@@ -41,11 +39,11 @@ j'ai ajoute enum Direction HAUT, DROITE, BAS, GAUCHE **/
 /** REMARQUE 2 :
 pour Robot::afficher, je propose une methode Affichage::afficherRobot(const Robot& r) de sorte que :
     -   dans Robot::afficher : on fait juste aff.afficheRobot(*this);
-    -   dans Affichage::afficherRobot(const Robot& r) : on fait ce qu'il faut pour mettre à jour l'ancienne case où était le robot
-        et la nouvelle case où il y a le robot **/
+    -   dans Affichage::afficherRobot(const Robot& r) : on fait ce qu'il faut pour mettre Ã  jour l'ancienne case oÃ¹ Ã©tait le robot
+        et la nouvelle case oÃ¹ il y a le robot **/
 
 /** REMARQUE 3 :
-je n'ai pas fait enleverObservateur car je n'ai pas l'impression que ça va servir **/
+je n'ai pas fait enleverObservateur car je n'ai pas l'impression que Ã§a va servir **/
 
 /** 08/12/2024 ______________________________________________________________________________________________________________________________**/
 
