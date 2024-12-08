@@ -46,6 +46,8 @@
 		<Unit filename="Observateur.h" />
 		<Unit filename="Robot.cpp" />
 		<Unit filename="Robot.h" />
+		<Unit filename="goto_xy_windows.cpp" />
+		<Unit filename="goto_xy_windows.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

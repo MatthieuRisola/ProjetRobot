@@ -44,3 +44,5 @@ public:
 private:
     int d_x, d_y;
 };
+
+#endif // OBSERVATEUR_H

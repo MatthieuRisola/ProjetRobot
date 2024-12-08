@@ -16,7 +16,7 @@ public:
     virtual void afficheDepart(const Labyrinthe& labyrinthe, const Robot& robot) const = 0;
 
     //mise a jour du labyrinthe apres un deplacement du robot
-    virtual void update(int ancienX, int ancienY, int nouveauX, int nouveauY, int direction) const = 0;
+    virtual void update(const Labyrinthe& labyrinthe, int ancienX, int ancienY, int nouveauX, int nouveauY, int direction) const = 0;
 };
 
 
@@ -26,9 +26,13 @@ public:
 
     void afficheDepart(const Labyrinthe& labyrinthe, const Robot& robot) const override;
 
-    //void update(int ancienX, int ancienY, int nouveauX, int nouveauY, int direction) const override;
+    void update(const Labyrinthe& labyrinthe, int ancienX, int ancienY, int nouveauX, int nouveauY, int direction) const override;
 };
 
 
 
 #endif // AFFICHAGE_H
+
+/*
+enleve r a la fin des methodes
+*/

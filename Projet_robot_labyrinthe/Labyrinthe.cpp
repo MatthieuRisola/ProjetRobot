@@ -16,7 +16,7 @@ void Labyrinthe::lisDepuisFichier(const std::string& fichier) {
         throw std::runtime_error("Impossible d'ouvrir fichier : "+fichier);
     }
 
-    d_cases.clear(); // Vider les ancinnes donnÃ©es
+    d_cases.clear(); // Vider les ancinnes données
     std::string ligne;
 
     while (std::getline(file, ligne)) {
@@ -28,7 +28,7 @@ void Labyrinthe::lisDepuisFichier(const std::string& fichier) {
                 case 'D': ligneCases.push_back(std::make_unique<Case>(Case::Depart)); break;
                 case 'A': ligneCases.push_back(std::make_unique<Case>(Case::Arrivee)); break;
                 default:
-                    throw std::invalid_argument("CaractÃ¨re invalide:" + std::string(1, c));
+                    throw std::invalid_argument("Caractère invalide:" + std::string(1, c));
             }
         }
         d_cases.push_back(std::move(ligneCases));
@@ -66,7 +66,7 @@ void Labyrinthe::afficheAvecRobot(const Affichage& affichage, const Robot& robot
     affichage.afficheDepart(*this, robot);
 }
 
-// VÃ©rification de validitÃ© du labyrinthe
+// Vérification de validité du labyrinthe
 /*
 bool Labyrinthe::estValide() const {
     bool departTrouvee = false, arriveeTrouvee = false;
@@ -80,12 +80,12 @@ bool Labyrinthe::estValide() const {
 }
 */
 
-// RÃ©cupÃ©ration d'informations sur une case
+// Récupération d'informations sur une case
 const Case& Labyrinthe::informationCase(int x, int y) const {
-// x doit Ãªtre compris entre 0 et la largeur du labyrinthe (d_cases[0].size() - 1),
-// y doit Ãªtre compris entre 0 et la hauteur du labyrinthe (d_cases.size() - 1).
+// x doit être compris entre 0 et la largeur du labyrinthe (d_cases[0].size() - 1),
+// y doit être compris entre 0 et la hauteur du labyrinthe (d_cases.size() - 1).
     if (x<0||x>=d_cases[0].size()||y < 0||y >=d_cases.size()) {
-        throw std::out_of_range("CoordonnÃ©e hors des limites du labyrinthe.");
+        throw std::out_of_range("Coordonnée hors des limites du labyrinthe.");
     }
     return *d_cases[y][x];
 }

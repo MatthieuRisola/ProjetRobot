@@ -62,3 +62,8 @@ void AffichageTexteSimple::update(const Labyrinthe& labyrinthe, int ancienX, int
     }
     goto_xy(labyrinthe.largeur(), labyrinthe.hauteur());
 }
+
+/*
+modif inverser largeur et hauteur dans laffichage
+ajout update texte simple
+*/
