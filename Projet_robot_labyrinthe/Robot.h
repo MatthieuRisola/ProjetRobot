@@ -8,6 +8,8 @@
 class Labyrinthe;
 class Affichage;
 
+enum Direction {HAUT = 1, DROITE = 2, BAS = 3, GAUCHE = 4};
+
 class Robot {
 public:
 
