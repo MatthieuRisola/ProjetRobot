@@ -1,48 +1,45 @@
 #ifndef OBSERVATEUR_H
 #define OBSERVATEUR_H
 
+class Affichage;
+class Labyrinthe;
+
 class Observateur {
 public:
     virtual ~Observateur() = default;
     virtual void update(int x, int y, int direction) = 0;
+private:
+
 };
 
-/*
 class ObservateurAffichage : public Observateur {
 public:
+    ObservateurAffichage(const Affichage &affichage, const Labyrinthe &labyrinthe, int x, int y, int direction);
     void update(int x, int y, int direction) override;
+private:
+    const Affichage &d_affichage;
+    const Labyrinthe &d_labyrinthe;
+    int d_ancienX, d_ancienY, d_ancienneDirection;
 };
-*/
 
-//observateur pour lalgorithme principal
 class ObservateurComptageDeplacements : public Observateur {
 public:
-    ObservateurComptageDeplacements();
+    ObservateurComptageDeplacements(int x, int y);
     void update(int x, int y, int direction) override;
     int nombreDeplacements() const;
 private:
     int d_nombreDeplacements;
+    int d_ancienX, d_ancienY;
 };
 
-//observateur pour lalgorithme principal
 class ObservateurComptageDirections : public Observateur {
 public:
-	ObservateurComptageDirections();
+	ObservateurComptageDirections(int direction);
     void update(int x, int y, int direction) override;
     int nombreDirections() const;
 private:
     int d_nombreDirections;
-};
-
-//observateur necessaire pour mettre a jour laffichage
-class ObservateurDernierePosition : public Observateur {
-public:
-    ObservateurDernierePosition();
-    void update(int x, int y);
-    int dernierX();
-    int dernierY();
-private:
-    int d_x, d_y;
+    int d_ancienneDirection;
 };
 
 #endif // OBSERVATEUR_H
