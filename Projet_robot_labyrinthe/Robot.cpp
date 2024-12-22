@@ -33,6 +33,7 @@ bool Robot::obstacleDevant(const Labyrinthe& laby) const
     return laby.typeCase(x,y)==Case::TypeCase::Mur;
 }
 
+
 bool Robot::obstacleGauche(const Labyrinthe& laby) const
 {
     int x=d_x, y=d_y;
@@ -113,6 +114,6 @@ void Robot::notifieObservateurs()
 {
     for(const auto& obs : d_observateurs)
     {
-        //obs->update(d_x,d_y,d_direction);
+        obs->update(d_x,d_y,d_direction);
     }
 }
