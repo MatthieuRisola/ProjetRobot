@@ -13,50 +13,50 @@
 class Labyrinthe {
 public:
     /**
-    Constructeur par défaut : initialise un labyrinthe vide.
+    Constructeur par dÃ©faut : initialise un labyrinthe vide.
     */
     Labyrinthe();
 
     /**
     Charge un labyrinthe depuis un fichier texte.
-    @param fichier Chemin vers le fichier contenant la représentation du labyrinthe.
-    @throw std::runtime_error si le fichier ne peut pas être ouvert.
-    @throw std::invalid_argument si le fichier contient des caractères non valides.
+    @param fichier Chemin vers le fichier contenant la reprÃ©sentation du labyrinthe.
+    @throw std::runtime_error si le fichier ne peut pas Ãªtre ouvert.
+    @throw std::invalid_argument si le fichier contient des caractÃ¨res non valides.
     */
     void lisDepuisFichier(const std::string& fichier);
 
     /**
     Sauvegarde le labyrinthe dans un fichier texte.
-    @param fichier Chemin vers le fichier où sauvegarder la représentation du labyrinthe.
-    @throw std::runtime_error si le fichier ne peut pas être ouvert.
+    @param fichier Chemin vers le fichier oÃ¹ sauvegarder la reprÃ©sentation du labyrinthe.
+    @throw std::runtime_error si le fichier ne peut pas Ãªtre ouvert.
     */
     void sauvegardeSur(const std::string& fichier) const;
 
     /**
     Affiche le labyrinthe sans le robot.
-    @param affichage Instance de la classe Affichage utilisée pour effectuer l'affichage.
+    @param affichage Instance de la classe Affichage utilisÃ©e pour effectuer l'affichage.
     */
     void afficheSansRobot(const Affichage& affichage) const;
 
     /**
     Affiche le labyrinthe avec le robot.
-    @param affichage Instance de la classe Affichage utilisée pour effectuer l'affichage.
-    @param robot Référence vers l'objet Robot à afficher dans le labyrinthe.
+    @param affichage Instance de la classe Affichage utilisÃ©e pour effectuer l'affichage.
+    @param robot RÃ©fÃ©rence vers l'objet Robot Ã  afficher dans le labyrinthe.
     */
     void afficheAvecRobot(const Affichage& affichage, const Robot& robot) const;
 
     /**
-    Vérifie si le labyrinthe est valide, c'est-à-dire qu'il contient à la fois une case de départ et une case d'arrivée.
+    VÃ©rifie si le labyrinthe est valide, c'est-Ã -dire qu'il contient Ã  la fois une case de dÃ©part et une case d'arrivÃ©e.
     @return true si le labyrinthe est valide, false sinon.
     */
     bool estValide() const;
 
     /**
-    Retourne les informations sur la case située aux coordonnées (x, y).
-    @param x Coordonnée x (colonne) de la case.
-    @param y Coordonnée y (ligne) de la case.
-    @return Référence constante vers la case demandée.
-    @throw std::out_of_range si les coordonnées sont hors des limites du labyrinthe.
+    Retourne les informations sur la case situÃ©e aux coordonnÃ©es (x, y).
+    @param x CoordonnÃ©e x (colonne) de la case.
+    @param y CoordonnÃ©e y (ligne) de la case.
+    @return RÃ©fÃ©rence constante vers la case demandÃ©e.
+    @throw std::out_of_range si les coordonnÃ©es sont hors des limites du labyrinthe.
     */
     const Case& informationCase(int x, int y) const;
 
@@ -79,9 +79,9 @@ public:
 
 private:
     /**
-    Matrice de pointeurs uniques représentant les cases du labyrinthe.
+    Matrice de pointeurs uniques reprÃ©sentant les cases du labyrinthe.
     */
-    std::vector<std::vector<std::unique_ptr<Case>>> d_cases;
+    std::vector<std::vector<Case>> d_cases;
 };
 
 #endif // LABYRINTHE_H
