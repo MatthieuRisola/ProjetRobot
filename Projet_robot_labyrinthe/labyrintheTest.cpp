@@ -13,17 +13,15 @@ TEST_CASE("Labyrinthe fonctionne correctement") {
     const std::string fichierTest = "test.txt";
     const std::string fichierTestInvalide = "test_labyrinthe_invalide.txt";
     const std::string fichierSauvegarde = "sauvegarde_labyrinthe.txt";
-
     Labyrinthe labyrinthe = creerEtVerifierLabyrinthe(fichierTest);
 
-    SUBCASE("Lecture et création d'un labyrinthe") {
-            REQUIRE_EQ(labyrinthe.hauteur(), 7);
-            REQUIRE_EQ(labyrinthe.largeur(), 16);
+    SUBCASE("Lecture et création d'un labyrinthe est correcte") {
+        REQUIRE_EQ(labyrinthe.hauteur(), 7);
+        REQUIRE_EQ(labyrinthe.largeur(), 16);
     }
 
-    SUBCASE("Sauvegarde et relecture") {
+    SUBCASE("Sauvegarde et relecture est correcte") {
         REQUIRE_NOTHROW(labyrinthe.sauvegardeSur(fichierSauvegarde));
-
         Labyrinthe labyrintheSauvegarde = creerEtVerifierLabyrinthe(fichierSauvegarde);
         REQUIRE_EQ(labyrinthe.hauteur(), labyrintheSauvegarde.hauteur());
         REQUIRE_EQ(labyrinthe.largeur(), labyrintheSauvegarde.largeur());
@@ -31,14 +29,17 @@ TEST_CASE("Labyrinthe fonctionne correctement") {
     }
 
     SUBCASE("Validation des labyrinthes") {
-        REQUIRE_UNARY(labyrintheValide.estValide());
-
-        Labyrinthe labyrintheInvalide;
-        REQUIRE_NOTHROW(labyrintheInvalide.lisDepuisFichier(fichierTestInvalide));
-        REQUIRE_UNARY_FALSE(labyrintheInvalide.estValide());
+        SUBCASE("Le labyrinthe est valide"){
+            REQUIRE_UNARY(labyrinthe.estValide());
+        }
+        SUBCASE("Le labyrinthe est invalide"){
+            Labyrinthe labyrintheInvalide;
+            REQUIRE_NOTHROW(labyrintheInvalide.lisDepuisFichier(fichierTestInvalide));
+            REQUIRE_UNARY_FALSE(labyrintheInvalide.estValide());
+        }
     }
 
-    SUBCASE("Accès aux informations sur une case") {
+    SUBCASE("Accès aux informations sur une case est correcte") {
         REQUIRE_NOTHROW(labyrinthe.informationCase(0,0));
         REQUIRE_EQ(labyrinthe.typeCase(1, 1), Case::Vide);
         REQUIRE_EQ(labyrinthe.typeCase(0, 1), Case::Mur);
