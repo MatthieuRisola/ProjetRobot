@@ -42,9 +42,9 @@ TEST_CASE("Labyrinthe fonctionne correctement") {
     SUBCASE("Accès aux informations sur une case est correcte") {
         REQUIRE_NOTHROW(labyrinthe.informationCase(0,0));
         REQUIRE_EQ(labyrinthe.typeCase(1, 1), Case::Vide);
-        REQUIRE_EQ(labyrinthe.typeCase(0, 1), Case::Mur);
-        REQUIRE_EQ(labyrinthe.typeCase(5, 2), Case::Arrivee);
-        REQUIRE_EQ(labyrinthe.typeCase(5, 12), Case::Depart);
+        REQUIRE_EQ(labyrinthe.typeCase(1, 0), Case::Mur);
+        REQUIRE_EQ(labyrinthe.typeCase(2, 5), Case::Arrivee);
+        REQUIRE_EQ(labyrinthe.typeCase(12, 5), Case::Depart);
         REQUIRE_THROWS_AS(labyrinthe.informationCase(-1, 0), std::out_of_range); // Case hors limites
     }
 

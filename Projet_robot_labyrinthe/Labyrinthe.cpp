@@ -88,7 +88,7 @@ const Case& Labyrinthe::informationCase(int x, int y) const {
 
 Case::TypeCase Labyrinthe::typeCase(int x, int y) const
 {
-    return d_cases[x][y].type();
+    return d_cases[y][x].type();
 }
 
 const std::vector<std::vector<Case>>& Labyrinthe::cases() const
