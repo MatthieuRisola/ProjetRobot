@@ -9,27 +9,43 @@ class Affichage {
 public:
     virtual ~Affichage() = default;
 
+    //affichage du symbole une case
+    virtual void afficheCaseXY(const Labyrinthe& labyrinthe, int x, int y) const = 0;
+
+    //affichage du symbole du robot
+    virtual void afficheRobot(int direction) const = 0;
+
     //affichage sans le robot pour la selection
-    virtual void afficheSansRobot(const Labyrinthe& labyrinthe) const = 0;
+    void afficheSansRobot(const Labyrinthe& labyrinthe) const;
 
     //affichage initial du labyrinthe
-    virtual void afficheDepart(const Labyrinthe& labyrinthe, const Robot& robot) const = 0;
+    void afficheDepart(const Labyrinthe& labyrinthe, const Robot& robot) const;
 
     //mise a jour du labyrinthe apres un deplacement du robot
-    virtual void update(const Labyrinthe& labyrinthe, int ancienX, int ancienY, int nouveauX, int nouveauY, int direction) const = 0;
+    void update(const Labyrinthe& labyrinthe, int ancienX, int ancienY, int nouveauX, int nouveauY, int direction) const;
 };
 
 
 class AffichageTexteSimple : public Affichage {
 public:
-    void afficheSansRobot(const Labyrinthe& labyrinthe) const override;
+    void afficheCaseXY(const Labyrinthe& labyrinthe, int x, int y) const override;
 
-    void afficheDepart(const Labyrinthe& labyrinthe, const Robot& robot) const override;
-
-    void update(const Labyrinthe& labyrinthe, int ancienX, int ancienY, int nouveauX, int nouveauY, int direction) const override;
+    void afficheRobot(int direction) const override;
 };
 
+class AffichageTexteAmeliore1 : public Affichage {
+public:
+    void afficheCaseXY(const Labyrinthe& labyrinthe, int x, int y) const override;
 
+    void afficheRobot(int direction) const override;
+};
+
+class AffichageTexteAmeliore2 : public Affichage {
+public:
+    void afficheCaseXY(const Labyrinthe& labyrinthe, int x, int y) const override;
+
+    void afficheRobot(int direction) const override;
+};
 
 #endif // AFFICHAGE_H
 
