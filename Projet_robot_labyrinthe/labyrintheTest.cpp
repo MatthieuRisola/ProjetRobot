@@ -14,14 +14,14 @@ TEST_CASE("Labyrinthe fonctionne correctement") {
     const std::string fichierTestInvalide = "test_labyrinthe_invalide.txt";
     const std::string fichierSauvegarde = "sauvegarde_labyrinthe.txt";
 
+    Labyrinthe labyrinthe = creerEtVerifierLabyrinthe(fichierTest);
+
     SUBCASE("Lecture et création d'un labyrinthe") {
-            Labyrinthe labyrinthe = creerEtVerifierLabyrinthe(fichierTest);
             REQUIRE_EQ(labyrinthe.hauteur(), 7);
             REQUIRE_EQ(labyrinthe.largeur(), 16);
     }
 
     SUBCASE("Sauvegarde et relecture") {
-        Labyrinthe labyrinthe = creerEtVerifierLabyrinthe(fichierTest);
         REQUIRE_NOTHROW(labyrinthe.sauvegardeSur(fichierSauvegarde));
 
         Labyrinthe labyrintheSauvegarde = creerEtVerifierLabyrinthe(fichierSauvegarde);
@@ -31,7 +31,6 @@ TEST_CASE("Labyrinthe fonctionne correctement") {
     }
 
     SUBCASE("Validation des labyrinthes") {
-        Labyrinthe labyrintheValide = creerEtVerifierLabyrinthe(fichierTest);
         REQUIRE_UNARY(labyrintheValide.estValide());
 
         Labyrinthe labyrintheInvalide;
@@ -40,8 +39,6 @@ TEST_CASE("Labyrinthe fonctionne correctement") {
     }
 
     SUBCASE("Accès aux informations sur une case") {
-        Labyrinthe labyrinthe = creerEtVerifierLabyrinthe(fichierTest);
-
         REQUIRE_NOTHROW(labyrinthe.informationCase(0,0));
         REQUIRE_EQ(labyrinthe.typeCase(1, 1), Case::Vide);
         REQUIRE_EQ(labyrinthe.typeCase(0, 1), Case::Mur);
