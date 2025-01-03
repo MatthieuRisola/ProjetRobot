@@ -9,33 +9,34 @@
 Labyrinthe::Labyrinthe() : d_cases{}
 {}
 
-// Lecture depuis un fichier
 void Labyrinthe::lisDepuisFichier(const std::string& fichier) {
     std::ifstream file(fichier);
     if (!file.is_open()) {
         throw std::runtime_error("Impossible d'ouvrir fichier : "+fichier);
     }
 
-    d_cases.clear(); // Vider les ancinnes données
+    d_cases.clear(); // Vider les anciennes données
     std::string ligne;
 
     while (std::getline(file, ligne)) {
         std::vector<Case> ligneCases;
         for (char c : ligne) {
+            if (c == '\r' || c == '\n' || c == ' ') {
+            continue; // Ignorer les retours à la ligne et espaces
+            }
             switch (c) {
                 case 'X': ligneCases.push_back(Case::Mur); break;
                 case '.': ligneCases.push_back(Case::Vide); break;
                 case 'D': ligneCases.push_back(Case::Depart); break;
                 case 'A': ligneCases.push_back(Case::Arrivee); break;
                 default:
-                    throw std::invalid_argument("Caractère invalide:" + std::string(1, c));
+                    throw std::invalid_argument("Caractère invalide: '" + std::string(1, c) + "' à la position " + std::to_string(d_cases.size()) + "," + std::to_string(ligneCases.size()));
             }
         }
         d_cases.push_back(ligneCases);
     }
 }
 
-// Sauvegarde dans un fichier
 
 void Labyrinthe::sauvegardeSur(const std::string& fichier) const {
     std::ofstream file(fichier);
@@ -56,17 +57,14 @@ void Labyrinthe::sauvegardeSur(const std::string& fichier) const {
 }
 
 
-// Affichage sans robot
 void Labyrinthe::afficheSansRobot(const Affichage& affichage) const {
     affichage.afficheSansRobot(*this);
 }
 
-// Affichage avec robot
+
 void Labyrinthe::afficheAvecRobot(const Affichage& affichage, const Robot& robot) const {
     affichage.afficheDepart(*this, robot);
 }
-
-// Vérification de validité du labyrinthe
 
 bool Labyrinthe::estValide() const {
     bool departTrouvee = false, arriveeTrouvee = false;
@@ -79,7 +77,6 @@ bool Labyrinthe::estValide() const {
     return departTrouvee && arriveeTrouvee;
 }
 
-// Récupération d'informations sur une case
 const Case& Labyrinthe::informationCase(int x, int y) const {
 // x doit être compris entre 0 et la largeur du labyrinthe (d_cases[0].size() - 1),
 // y doit être compris entre 0 et la hauteur du labyrinthe (d_cases.size() - 1).
@@ -94,20 +91,10 @@ Case::TypeCase Labyrinthe::typeCase(int x, int y) const
     return d_cases[x][y].type();
 }
 
-// Affichage du nombre de cases parcourues
-
-void Labyrinthe::afficheNombreCasesParcourues() const {
-    int casesParcourues=0;
-    for (const auto& ligne : d_cases) {
-        for (const auto& casexy : ligne) {
-            if (casexy.type() == Case::Vide) {
-                ++casesParcourues;
-            }
-        }
-    }
-    std::cout << "Nombre de cases parcourues : " << casesParcourues << '\n';
+const std::vector<std::vector<Case>>& Labyrinthe::cases() const
+{
+    return d_cases;
 }
-
 
 int Labyrinthe::largeur() const
 {
