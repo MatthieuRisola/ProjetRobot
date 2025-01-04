@@ -3,34 +3,27 @@
 #include <conio.h>
 #include "Observateur.h"
 #include <vector>
+#include "Affichage.h"
 
 using std::cout;
 using std::cin;
 
-Labyrinthe selectionLabyrinthe(const std::vector<std::string> &nomFichiersLabyrinthes, const Affichage &aff)
+Labyrinthe selectionLabyrinthe() // A TESTER
 {
-    int i=0;
-    for(const auto &fichier : nomFichiersLabyrinthes)
-    {
-        Labyrinthe laby{};
-        laby.lisDepuisFichier(fichier);
-        cout<<"Labyrinthe "<<i+1<<" :"<<std::endl;
-        laby.afficheSansRobot(aff);
-        cout<<std::endl<<std::endl;
-        ++i;
-    }
-    cout<<"Choix du labyrinthe"<<std::endl;
-    cout<<"Labyrinthe n° : "<<std::endl;
-    int numeroLabyrinthe;
-    do{
-        cin>>numeroLabyrinthe;
-    }while(numeroLabyrinthe<1 || numeroLabyrinthe>nomFichiersLabyrinthes.size());
+    std::string nomFichier;
+    std::cout<<"Entrer le nom du fichier contenant le labyrinthe : ";
+    std::cin>>nomFichier;
     Labyrinthe laby{};
-    laby.lisDepuisFichier(nomFichiersLabyrinthes[numeroLabyrinthe-1]);
+    laby.lisDepuisFichier(nomFichier);
     return laby;
 }
 
-void selectionAlgorithme() //TODO
+/*Affichage selectionAffichage(const Labyrinthe &laby) //TO DO
+{
+
+}*/
+
+void selectionAlgorithme() //A TESTER
 {
     cout<<"Selection de l'algorithme de sortie du robot"<<std::endl;
     cout<<"Algorithme (1) : Algorithme de la main droite"<<std::endl;
