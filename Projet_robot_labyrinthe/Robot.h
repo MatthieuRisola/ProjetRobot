@@ -19,7 +19,7 @@ public:
     int direction() const; //test ecrit
     bool obstacleDevant(const Labyrinthe& laby) const; //test ecrit
     bool obstacleGauche(const Labyrinthe& laby) const; //test ecrit
-    bool obstacleDroite(const Labyrinthe& laby) const;
+    bool obstacleDroite(const Labyrinthe& laby) const; //test ecrit
 
     void avance(); //test ecrit, TODO : factoriser
     void tourneGauche(); //test ecrit
@@ -29,7 +29,7 @@ public:
 
     void ajouteObservateur(std::unique_ptr<Observateur> obs);
     //void enleveObservateur(Observateur* obs); //TODO si nécessaire
-    void notifieObservateurs();
+    void notifieObservateurs();s
 private:
     int d_x, d_y, d_direction;
     std::vector<std::unique_ptr<Observateur>> d_observateurs;

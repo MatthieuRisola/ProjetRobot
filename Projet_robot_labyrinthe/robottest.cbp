@@ -32,12 +32,16 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Affichage.cpp" />
+		<Unit filename="Affichage.h" />
 		<Unit filename="Case.cpp" />
 		<Unit filename="Case.h" />
 		<Unit filename="Labyrinthe.cpp" />
 		<Unit filename="Labyrinthe.h" />
 		<Unit filename="Robot.cpp" />
 		<Unit filename="Robot.h" />
+		<Unit filename="goto_xy_windows.cpp" />
+		<Unit filename="goto_xy_windows.h" />
 		<Unit filename="maintest.cpp" />
 		<Unit filename="robottest.cpp" />
 		<Extensions />
