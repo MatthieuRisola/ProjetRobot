@@ -61,7 +61,38 @@ TEST_CASE("Robot fonctionne")
             }
             SUBCASE("Robot vérifie bien qu'il n'y a pas un obstacle devant lui")
             {
-
+                SUBCASE("Robot verifie bien pas d'obstacle devant lui quand sa direction est HAUT")
+                {
+                    fichier<<"X.X"<<std::endl;
+                    fichier<<"XXX"<<std::endl;
+                    fichier<<"XXX"<<std::endl;
+                    direction=HAUT;
+                }
+                SUBCASE("Robot veifie bien pas d'obstacle devant lui quand sa direction est DROITE")
+                {
+                    fichier<<"XXX"<<std::endl;
+                    fichier<<"XX."<<std::endl;
+                    fichier<<"XXX"<<std::endl;
+                    direction=DROITE;
+                }
+                SUBCASE("Robot verifie bien pas d'obstacle devant lui quand sa direction est BAS")
+                {
+                    fichier<<"XXX"<<std::endl;
+                    fichier<<"XXX"<<std::endl;
+                    fichier<<"X.X"<<std::endl;
+                    direction=BAS;
+                }
+                SUBCASE("Robot verifie bien d'obstacle devant lui quand sa direction est GAUCHE")
+                {
+                    fichier<<"XXX"<<std::endl;
+                    fichier<<".XX"<<std::endl;
+                    fichier<<"XXX"<<std::endl;
+                    direction=GAUCHE;
+                }
+                Labyrinthe laby{};
+                Robot r(x,y,direction);
+                laby.lisDepuisFichier(nomFichier);
+                REQUIRE_EQ(false, r.obstacleDevant(laby));
             }
         }
         SUBCASE("Robot verifie correctement si obstacle à sa gauche")
