@@ -5,8 +5,6 @@
 #include <memory>
 #include "Observateur.h"
 
-
-
 class Labyrinthe;
 class Affichage;
 
