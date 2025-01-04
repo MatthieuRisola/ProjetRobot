@@ -17,7 +17,7 @@ public:
     int x() const; //test ecrit
     int y() const; //test ecrit
     int direction() const; //test ecrit
-    bool obstacleDevant(const Labyrinthe& laby) const;
+    bool obstacleDevant(const Labyrinthe& laby) const; //test ecrit
     bool obstacleGauche(const Labyrinthe& laby) const;
     bool obstacleDroite(const Labyrinthe& laby) const;
 
