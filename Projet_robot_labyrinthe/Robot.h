@@ -18,7 +18,7 @@ public:
     int y() const; //test ecrit
     int direction() const; //test ecrit
     bool obstacleDevant(const Labyrinthe& laby) const; //test ecrit
-    bool obstacleGauche(const Labyrinthe& laby) const;
+    bool obstacleGauche(const Labyrinthe& laby) const; //test ecrit
     bool obstacleDroite(const Labyrinthe& laby) const;
 
     void avance(); //test ecrit, TODO : factoriser

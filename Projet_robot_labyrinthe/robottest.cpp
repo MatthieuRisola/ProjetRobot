@@ -170,7 +170,45 @@ TEST_CASE("Robot fonctionne")
         }
         SUBCASE("Robot verifie correctement si obstacle à sa droite")
         {
+            SUBCASE("Robot detecte qu'il y a bien un obstacle à sa droite")
+            {
+                SUBCASE("Robot detecte qu'il y a bien un obstacle à sa droite quand sa direction est HAUT")
+                {
+                    fichier<<"..."<<std::endl;
+                    fichier<<"..X"<<std::endl;
+                    fichier<<"..."<<std::endl;
+                    direction=HAUT;
+                }
+                SUBCASE("Robot detecte qu'il y a bien un obstacle à sa droite quand sa direction est DROITE")
+                {
+                    fichier<<"..."<<std::endl;
+                    fichier<<"..."<<std::endl;
+                    fichier<<".X."<<std::endl;
+                    direction=DROITE;
+                }
+                SUBCASE("Robot detecte qu'il y a bien un obstacle à sa droite quand sa direction est BAS")
+                {
+                    fichier<<"..."<<std::endl;
+                    fichier<<"X.."<<std::endl;
+                    fichier<<"..."<<std::endl;
+                    direction=BAS;
+                }
+                SUBCASE("Robot detecte qu'il y a bien un obstacle à sa droite quand sa direction est GAUCHE")
+                {
+                    fichier<<".X."<<std::endl;
+                    fichier<<"..."<<std::endl;
+                    fichier<<"..."<<std::endl;
+                    direction=GAUCHE;
+                }
+                Labyrinthe laby{};
+                Robot r(x,y,direction);
+                laby.lisDepuisFichier(nomFichier);
+                REQUIRE_EQ(true, r.obstacleDroite(laby));
+            }
+            SUBCASE("Robot detecte bien qu'il n'y a pas obstacle à sa droite")
+            {
 
+            }
         }
     }
     SUBCASE("Robot avance correctement selon sa direction") //TODO : factoriser par Robot r{x,y,direction} si possible
