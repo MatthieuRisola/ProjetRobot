@@ -93,9 +93,9 @@ void Robot::tourneDroite()
     }
 }
 
-void Robot::affiche(const Affichage &aff) //TODO : mettre paramètres
+void Robot::affiche(const Affichage &affichage)
 {
-    //aff.afficheRobot(*this);
+    affichage.afficheRobot(d_direction);
 }
 
 void Robot::ajouteObservateur(std::unique_ptr<Observateur> obs)

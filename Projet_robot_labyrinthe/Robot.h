@@ -13,7 +13,7 @@ enum Direction {HAUT = 1, DROITE = 2, BAS = 3, GAUCHE = 4};
 class Robot {
 public:
 
-    Robot(int x, int y, int direction); //test ecrit
+    Robot(int x, int y, int direction);
     int x() const;
     int y() const;
     int direction() const;
@@ -21,38 +21,18 @@ public:
     bool obstacleGauche(const Labyrinthe& laby) const;
     bool obstacleDroite(const Labyrinthe& laby) const;
 
-    void avance(); //test ecrit, TODO : factoriser
-    void tourneGauche(); //test ecrit
-    void tourneDroite(); //test ecrit
+    void avance(); //TODO : factoriser
+    void tourneGauche();
+    void tourneDroite();
 
-    void affiche(const Affichage &aff);
+    void affiche(const Affichage &aff); //pas de test
 
-    void ajouteObservateur(std::unique_ptr<Observateur> obs);
+    void ajouteObservateur(std::unique_ptr<Observateur> obs); //pas de test
     //void enleveObservateur(Observateur* obs); //TODO si nécessaire
-    void notifieObservateurs();
+    void notifieObservateurs(); //pas de test
 private:
     int d_x, d_y, d_direction;
     std::vector<std::unique_ptr<Observateur>> d_observateurs;
 };
-
-/** REMARQUE 1 :
-j'ai ajoute enum Direction HAUT, DROITE, BAS, GAUCHE **/
-
-/** REMARQUE 2 :
-pour Robot::afficher, je propose une methode Affichage::afficherRobot(const Robot& r) de sorte que :
-    -   dans Robot::afficher : on fait juste aff.afficheRobot(*this);
-    -   dans Affichage::afficherRobot(const Robot& r) : on fait ce qu'il faut pour mettre à jour l'ancienne case où était le robot
-        et la nouvelle case où il y a le robot **/
-
-/** REMARQUE 3 :
-je n'ai pas fait enleverObservateur car je n'ai pas l'impression que ça va servir **/
-
-/** 08/12/2024 ______________________________________________________________________________________________________________________________**/
-
-/** REMARQUE 4 : changeDirection() pour pouvoir mieux factoriser les tests ? **/
-
-/** REMARQUE 5 : debut de chaque classe en Majuscule **/
-
-/** REMARQUE 6 : avancer -> avance, notifier -> notifie, tournerGauche->tourneGauche, etc.. **/
 
 #endif // ROBOT_H
