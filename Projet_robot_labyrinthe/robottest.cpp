@@ -1,8 +1,10 @@
 #define DOCTEST_CONFIG_NO_MULTITHREADING
 #include "doctest.h"
 #include "Robot.h"
+#include "Labyrinthe.h"
 
-// tester x(), y(), direction() ?
+#include <fstream>
+
 // ATTENTION : au debut le robot ne peut pas changer sa direction
 
 TEST_CASE("Robot fonctionne")
@@ -17,9 +19,50 @@ TEST_CASE("Robot fonctionne")
     }
     SUBCASE("Robot verifie s'il y a un obstacle correctement")
     {
+        int x{1}, y{1}, direction;
+        std::string nomFichier{"testrobot.txt"};
+        std::ofstream fichier{nomFichier};
         SUBCASE("Robot verifie correctement si obstacle devant lui")
         {
+            SUBCASE("Robot verifie bien qu'il y a un obstacle devant lui")
+            {
+                SUBCASE("Robot verifie bien obstacle devant lui quand sa direction est HAUT")
+                {
+                    fichier<<".X."<<std::endl;
+                    fichier<<"..."<<std::endl;
+                    fichier<<"..."<<std::endl;
+                    direction=HAUT;
+                }
+                SUBCASE("Robot veifie bien obstacle devant lui quand sa direction est DROITE")
+                {
+                    fichier<<"..."<<std::endl;
+                    fichier<<"..X"<<std::endl;
+                    fichier<<"..."<<std::endl;
+                    direction=DROITE;
+                }
+                SUBCASE("Robot verifie bien obstacle devant lui quand sa direction est BAS")
+                {
+                    fichier<<"..."<<std::endl;
+                    fichier<<"..."<<std::endl;
+                    fichier<<".X."<<std::endl;
+                    direction=BAS;
+                }
+                SUBCASE("Robot verifie bien obstacle devant lui quand sa direction est GAUCHE")
+                {
+                    fichier<<"..."<<std::endl;
+                    fichier<<"X.."<<std::endl;
+                    fichier<<"..."<<std::endl;
+                    direction=GAUCHE;
+                }
+                Labyrinthe laby{};
+                Robot r(x,y,direction);
+                laby.lisDepuisFichier(nomFichier);
+                REQUIRE_EQ(true, r.obstacleDevant(laby));
+            }
+            SUBCASE("Robot vérifie bien qu'il n'y a pas un obstacle devant lui")
+            {
 
+            }
         }
         SUBCASE("Robot verifie correctement si obstacle à sa gauche")
         {
