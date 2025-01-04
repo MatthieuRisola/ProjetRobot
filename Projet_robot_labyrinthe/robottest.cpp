@@ -117,3 +117,21 @@ TEST_CASE("Robot fonctionne")
         }
     }
 }
+
+TEST_CASE("Robot renvoie les donnees correctes")
+{
+    int x{5}, y{6}, direction{HAUT};
+    Robot r(x,y,direction);
+    SUBCASE("Robot donne sa coordonnée x correcte")
+    {
+        REQUIRE_EQ(x, r.x());
+    }
+    SUBCASE("Robot donne sa coordonnée y correcte")
+    {
+        REQUIRE_EQ(y, r.y());
+    }
+    SUBCASE("Robot donne sa direction correctement")
+    {
+        REQUIRE_EQ(direction, r.direction());
+    }
+}
