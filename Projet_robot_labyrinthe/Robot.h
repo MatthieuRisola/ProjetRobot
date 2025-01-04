@@ -13,23 +13,23 @@ enum Direction {HAUT = 1, DROITE = 2, BAS = 3, GAUCHE = 4};
 class Robot {
 public:
 
-    Robot(int x, int y, int direction); //test ecrit
-    int x() const; //test ecrit
-    int y() const; //test ecrit
-    int direction() const; //test ecrit
-    bool obstacleDevant(const Labyrinthe& laby) const; //test ecrit
-    bool obstacleGauche(const Labyrinthe& laby) const; //test ecrit
-    bool obstacleDroite(const Labyrinthe& laby) const; //test ecrit
+    Robot(int x, int y, int direction);
+    int x() const;
+    int y() const;
+    int direction() const;
+    bool obstacleDevant(const Labyrinthe& laby) const;
+    bool obstacleGauche(const Labyrinthe& laby) const;
+    bool obstacleDroite(const Labyrinthe& laby) const;
 
-    void avance(); //test ecrit, TODO : factoriser
-    void tourneGauche(); //test ecrit
-    void tourneDroite(); //test ecrit
+    void avance(); //TODO : factoriser
+    void tourneGauche();
+    void tourneDroite();
 
-    void affiche(const Affichage &aff);
+    void affiche(const Affichage &aff); //pas de test
 
-    void ajouteObservateur(std::unique_ptr<Observateur> obs);
+    void ajouteObservateur(std::unique_ptr<Observateur> obs); //pas de test
     //void enleveObservateur(Observateur* obs); //TODO si nécessaire
-    void notifieObservateurs();s
+    void notifieObservateurs(); //pas de test
 private:
     int d_x, d_y, d_direction;
     std::vector<std::unique_ptr<Observateur>> d_observateurs;

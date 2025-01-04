@@ -93,7 +93,7 @@ void Robot::tourneDroite()
     }
 }
 
-void Robot::affiche(const Affichage &affichage) //TODO : mettre paramètres
+void Robot::affiche(const Affichage &affichage)
 {
     affichage.afficheRobot(d_direction);
 }
