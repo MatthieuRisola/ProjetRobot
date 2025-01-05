@@ -16,7 +16,7 @@ void Affichage::update(const Labyrinthe& labyrinthe, int ancienX, int ancienY, i
     afficheCaseXY(labyrinthe,ancienX,ancienY);
     goto_xy(nouveauX, nouveauY);
     afficheRobot(direction);
-    goto_xy(labyrinthe.largeur(), labyrinthe.hauteur());
+    goto_xy(0, labyrinthe.hauteur());
 }
 
 void AffichageTexteSimple::afficheCaseXY(const Labyrinthe& labyrinthe, int x, int y) const
