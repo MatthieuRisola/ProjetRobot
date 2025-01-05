@@ -36,6 +36,7 @@
 		<Unit filename="Affichage.h" />
 		<Unit filename="Case.cpp" />
 		<Unit filename="Case.h" />
+		<Unit filename="Casetest.cpp" />
 		<Unit filename="Labyrinthe.cpp" />
 		<Unit filename="Labyrinthe.h" />
 		<Unit filename="Robot.cpp" />
