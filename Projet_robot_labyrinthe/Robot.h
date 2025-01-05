@@ -25,10 +25,10 @@ public:
     void tourneGauche();
     void tourneDroite();
 
-    void affiche(const Affichage &aff); //pas de test
+    void affiche(const Affichage &aff) const; //pas de test
 
     void ajouteObservateur(std::unique_ptr<Observateur> obs); //pas de test
-    //void enleveObservateur(Observateur* obs); //TODO si nécessaire
+    //void enleveObservateur(Observateur* obs); //TODO si nÃ©cessaire
     void notifieObservateurs(); //pas de test
 private:
     int d_x, d_y, d_direction;
