@@ -33,8 +33,8 @@ std::unique_ptr<Affichage> selectionAffichage(const Labyrinthe &laby) //TO DO : 
     for(int i{0}; i<tableau.size(); i++)
     {
         cout<<"Affichage ("<<i+1<<")"<<std::endl;
-        tableau[i]->afficheDepart(laby,r);
-        cout<<std::endl<<std::endl<<std::endl;
+        tableau[i]->afficheSansRobot(laby);
+        cout<<std::endl;
     }
     int numeroAffichage;
     do{
@@ -64,7 +64,7 @@ int selectionAlgorithme()
 }
 
 /** Test sur selectionAlgorithme
-        test avec un numero invalide (différent de 1 et 2)
+        test avec un numero invalide (diffÃ©rent de 1 et 2)
         test avec numero valide (1 ou 2)
 **/
 void testSelectionAlgorithme()
@@ -83,7 +83,7 @@ void testSelectionLabyrinthe()
 }
 
 /** Test sur selectionAffichage
-        test avec numero invalide (différent de 1, 2 et 3)
+        test avec numero invalide (diffÃ©rent de 1, 2 et 3)
         test avec numero valide (1, 2 ou 3)
 **/
 void testSelectionAffichage()
