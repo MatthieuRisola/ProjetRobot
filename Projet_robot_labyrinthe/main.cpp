@@ -8,22 +8,41 @@
 using std::cout;
 using std::cin;
 
+const int NUMERO_MAIN_DROITE=1;
+const int NUMERO_PLEDGE=1;
+
 Labyrinthe selectionLabyrinthe() // A TESTER
 {
     std::string nomFichier;
-    std::cout<<"Entrer le nom du fichier contenant le labyrinthe : ";
-    std::cin>>nomFichier;
+    cout<<"Entrer le nom du fichier contenant le labyrinthe : ";
+    cin>>nomFichier;
     Labyrinthe laby{};
     laby.lisDepuisFichier(nomFichier);
     return laby;
 }
 
-/*Affichage selectionAffichage(const Labyrinthe &laby) //TO DO
+std::unique_ptr<Affichage> selectionAffichage(const Labyrinthe &laby)
 {
+    cout<<"Choix de l'affichage du labyrinthe :"<<std::endl;
+    std::vector<std::unique_ptr<Affichage>> tableau{};
+    tableau.reserve(3);
+    tableau.push_back(std::make_unique<AffichageTexteSimple>());
+    tableau.push_back(std::make_unique<AffichageTexteAmeliore1>());
+    tableau.push_back(std::make_unique<AffichageTexteAmeliore2>());
+    for(int i{0}; i<tableau.size(); i++)
+    {
+        cout<<"Affichage ("<<i+1<<")"<<std::endl;
+        tableau[i]->afficheCaseXY(laby,0,0);
+    }
+    int numeroAffichage;
+    do{
+        cout<<"Numero de l'affichage choisi : ";
+        cin>>numeroAffichage;
+    }while(numeroAffichage<1 || numeroAffichage>3);
+    return std::move(tableau[numeroAffichage-1]);
+}
 
-}*/
-
-void selectionAlgorithme() //A TESTER
+int selectionAlgorithme() //A TESTER
 {
     cout<<"Selection de l'algorithme de sortie du robot"<<std::endl;
     cout<<"Algorithme (1) : Algorithme de la main droite"<<std::endl;
@@ -36,16 +55,18 @@ void selectionAlgorithme() //A TESTER
     cout<<"Numero de l'algorithme choisi : ";
     int numeroAlgorithme;
     do{
+        cout<<"Numero de l'algorithme choisi : ";
         cin>>numeroAlgorithme;
     }while(numeroAlgorithme!=1 && numeroAlgorithme!=2);
+    return numeroAlgorithme;
 }
 
-void mainDroite(Robot &rob, const Labyrinthe &laby)
+void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
 {
 
 }
 
-void pledge(Robot &rob, const Labyrinthe &laby)
+void pledge(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
 {
 
 }
