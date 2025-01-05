@@ -105,6 +105,67 @@ void testSelectionAffichage()
 
 void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
 {
+    int max_iteration = 1000;
+    int it = 0;
+
+    // Avancer tout droit jusqu'à rencontrer un mur à droite (si il n'y avait pas de mur au depart)
+    while (it < max_iteration && !rob.obstacleDroite(laby)) //si pas d'obstacle à droite
+    {
+        //on avance tout droit si pas d'obstacle
+        if (!rob.obstacleDevant(laby))
+        {
+            rob.avance();
+            rob.notifieObservateurs();
+            getch(); //a voir si on laisse les getch (pck quand tourne en rond c'est long de cliquer)
+        }
+        else
+        {
+            rob.tourneGauche(); // Tourner à gauche si bloqué devant
+            rob.notifieObservateurs();
+        }
+
+        it++;
+    }
+
+    // Suivre le mur à droite
+    bool sortieTrouvee = false;
+    while (it < max_iteration && !sortieTrouvee)
+    {
+        if (laby.typeCase(rob.x(), rob.y()) == Case::Arrivee) //peut être bien de faire une fonction qui teste direct case du robot sans avoir besoin d'acceder a ses coordonnees ?
+        {
+            sortieTrouvee = true;
+            rob.notifieObservateurs();
+            continue; // Arrêt logique
+        }
+
+        if (!rob.obstacleDroite(laby))
+        {
+            rob.tourneDroite(); // On tourne à droite car pas d'obstacle et on avance
+            rob.notifieObservateurs();
+            rob.avance();
+            rob.notifieObservateurs();
+            getch();
+        }
+        else
+            if (!rob.obstacleDevant(laby))
+            {
+                rob.avance(); // il y a un obstacle à droite mais pas devant donc on avance devant
+                rob.notifieObservateurs();
+                getch();
+            }
+            else
+            {
+                rob.tourneGauche(); //il y a un obstacle à droite et devant donc on tourne à gauche
+                rob.notifieObservateurs();
+            }
+
+        it++;
+    }
+
+    if(it>= max_iteration)
+        std::cout << "Maximum d'iteration atteint, ce type d'algorithme n'est pas compatible avec ce labyrinthe" << std::endl;
+    else
+        std::cout << "Le robot a trouvé l'arrivee ! " << std::endl;
 
 }
 
@@ -187,6 +248,29 @@ void testProgrammePrincipal()
     programmePrincipal();
 }
 
+void testAlgoMainDroite()
+{
+    SetConsoleOutputCP(65001);
+
+    Labyrinthe laby{};
+    laby.lisDepuisFichier("testaffichage.txt");
+
+    Robot r(5,6,Direction::BAS);
+    //bool robotCorrect;
+    //initialisationLabyrinthe(r, laby, robotCorrect);
+
+    AffichageTexteAmeliore2 aff{};
+    //aff.afficheDepart(laby, r);
+    laby.afficheAvecRobot(aff, r);
+
+
+    ObservateurAffichage obs(aff,laby,r.x(),r.y(),r.direction());
+    r.ajouteObservateur(std::make_unique<ObservateurAffichage>(obs));
+
+    mainDroite(r, laby, aff);
+    std::cout << "Test terminé !" << std::endl;
+}
+
 int main()
 {
     SetConsoleOutputCP(65001);
@@ -195,6 +279,7 @@ int main()
     //testSelectionAffichage();
 
     //testProgrammePrincipal();
+    //testAlgoMainDroite();
 
     Robot r(5,6,Direction::HAUT);
     AffichageTexteAmeliore1 aff{};
