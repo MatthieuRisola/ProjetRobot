@@ -4,6 +4,7 @@
 #include "Observateur.h"
 #include <vector>
 #include "Affichage.h"
+#include "DeplacementRobot.h"
 
 using std::cout;
 using std::cin;
@@ -18,6 +19,13 @@ Labyrinthe selectionLabyrinthe()
     cin>>nomFichier;
     Labyrinthe laby{};
     laby.lisDepuisFichier(nomFichier);
+    while(laby.estValide()==false)
+    {
+        cout<<"Labyrinthe invalide, il manque une case de depart ou une case arrivee"<<std::endl;
+        cout<<"Entrer le nom du fichier contenant le labyrinthe : ";
+        cin>>nomFichier;
+        laby.lisDepuisFichier(nomFichier);
+    }
     return laby;
 }
 
@@ -66,6 +74,7 @@ int selectionAlgorithme()
 /** Test sur selectionAlgorithme
         test avec un numero invalide (différent de 1 et 2)
         test avec numero valide (1 ou 2)
+        test redemande le nom du fichier quand le fichier n'a pas une case arrivee ou une case depart
 **/
 void testSelectionAlgorithme()
 {
@@ -102,25 +111,59 @@ void pledge(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
 
 }
 
-void initialisationLabyrinthe(Robot &r, const Labyrinthe &laby, bool bonLabyrinthe)
+void initialisationLabyrinthe(Robot &rob, const Labyrinthe &laby, bool &robotCorrect)
 {
-
+    int x,y, i{0}, j{0};
+    bool departTrouve=false;
+    while((j<laby.hauteur()) && (departTrouve == false))
+    {
+        i=0;
+        while((i<laby.largeur()) && (departTrouve==false))
+        {
+            if(laby.typeCase(i,j) == Case::TypeCase::Depart)
+            {
+                x=i;
+                y=j;
+                departTrouve=true;
+            }
+            ++i;
+        }
+        ++j;
+    }
+    rob = Robot{x,y,HAUT};
+    RobotDroit robotD{};
+    int compteurNombreTours{0};
+    while(compteurNombreTours<4 && rob.obstacleDevant(laby) == true)
+    {
+        robotD.manipulate(rob);
+        ++compteurNombreTours;
+    }
+    if(compteurNombreTours<4)
+    {
+        robotCorrect=true;
+    }
+    else
+    {
+        robotCorrect=false;
+    }
 }
 
 void programmePrincipal()
 {
     Labyrinthe laby{selectionLabyrinthe()};
+    Robot rob{0,0,HAUT};
+    bool robotCorrect{false};
+    initialisationLabyrinthe(rob,laby,robotCorrect);
+
+    while(robotCorrect==false)
+    {
+        cout<<"Labyrinthe selectionne est invalide, le robot ne peut se deplacer"<<std::endl;
+        laby=selectionLabyrinthe();
+        initialisationLabyrinthe(rob, laby, robotCorrect);
+    }
+
     std::unique_ptr<Affichage> affichage{selectionAffichage(laby)};
     int numeroAlgo{selectionAlgorithme()};
-
-    Robot rob{0,0,HAUT};
-    bool bonLabyrinthe{false};
-    initialisationLabyrinthe(rob,laby,bonLabyrinthe);
-
-    do{
-        laby=selectionLabyrinthe();
-        initialisationLabyrinthe(rob,laby,bonLabyrinthe);
-    }while(bonLabyrinthe==false);
 
     if(numeroAlgo == NUMERO_MAIN_DROITE)
     {
@@ -132,13 +175,23 @@ void programmePrincipal()
     }
 }
 
+/** Tests sur le programme principal dont initialisationLabyrinthe
+    test avec la case depart a differents endroits,la direction initiale de robot est initialise correctement en correlation avec le labyrinthe
+    test la position (x,y) de robot est bien initialisee
+    test le bon algo est lance apres le choix de l'utilisateur
+**/
+void testProgrammePrincipal()
+{
+    programmePrincipal();
+}
+
 int main()
 {
     //testSelectionAlgorithme();
     //testSelectionLabyrinthe();
     //testSelectionAffichage();
 
-    //programmePrincipal();
+    //testProgrammePrincipal();
 
     Robot r(5,6,Direction::HAUT);
     AffichageTexteAmeliore1 aff{};
