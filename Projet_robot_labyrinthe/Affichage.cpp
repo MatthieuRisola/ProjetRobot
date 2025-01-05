@@ -156,8 +156,9 @@ void AffichageTexteAmeliore1::afficheRobot(int direction) const
 
 void AffichageTexteAmeliore2::afficheCaseXY(const Labyrinthe& labyrinthe, int x, int y) const
 {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     Case::TypeCase c=labyrinthe.typeCase(x,y);
-    char symbole;
+    wchar_t symbole;
     switch(c)
     {
         case Case::Vide : symbole = '.';
@@ -174,47 +175,91 @@ void AffichageTexteAmeliore2::afficheCaseXY(const Labyrinthe& labyrinthe, int x,
             bool basDroite = estMur(labyrinthe, x+1, y+1);
 
             //choix par defaut
-            symbole = '+';
+            symbole = L'┼';
             if(haut) {
                 if(bas) {
                     if(gauche) {
                         if(droite) {
-                            if(hautGauche)
-                                if(hautDroite)
-                                    if(basGauche)
+                            if(hautGauche){
+                                if(hautDroite){
+                                    if(basGauche){
                                         if(basDroite)
                                             //toutes les cases autour sont des murs
-                                            symbole = '#';
+                                            symbole = L'█';
+                                        else
+                                            symbole=L'┌';
+                                    }
+                                    else if(basDroite)
+                                        symbole=L'┐';
+                                    else
+                                        symbole = L'┬';
+                                }
+                                else if(basGauche){
+                                    if(basDroite)
+                                        symbole=L'└';
+                                    else
+                                        symbole=L'├';
+                                }
+                            }
+                            else if(hautDroite){
+                                if(basGauche){
+                                    if(basDroite)
+                                        symbole = L'┘';
+                                }
+                                else if(basDroite)
+                                    symbole = L'┤';
+                            }
+                            else if(basGauche&&basDroite)
+                                symbole = L'┴';
                         }
                         else if(hautGauche&&basGauche)
-                            symbole = '|';
+                            symbole = L'│';
+                        else
+                            symbole = L'┤';
                     }
                     else if(droite){
                         if(hautDroite&&basDroite)
-                            symbole = '|';
+                            symbole = L'│';
+                        else
+                            symbole = L'├';
                     }
                     else
-                        symbole = '|';
+                        symbole = L'│';
                 }
                 else if(gauche){
-                    if(droite)
+                    if(droite){
                         if(hautGauche&&hautDroite)
-                            symbole = '-';
+                            symbole = L'─';
+                        else
+                            symbole=L'┴';
+                    }
+                    else
+                        symbole = L'┘';
                 }
-                else if(!droite)
-                    symbole ='|';
+                else if(droite)
+                    symbole=L'└';
+                else
+                    symbole =L'│';
             }
             else if(bas){
                 if(gauche){
                     if(droite)
                         if(basGauche&&basDroite)
-                            symbole = '-';
+                            symbole = L'─';
+                        else
+                            symbole = L'┬';
+                    else
+                        symbole = L'┐';
                 }
-                else if(!droite)
-                    symbole ='|';
+                else if(droite)
+                    symbole = L'┌';
+                else
+                    symbole =L'│';
             }
             else if(gauche||droite)
-                symbole='-';
+                symbole=L'─';
+            else
+                symbole=L'○';
         }
         break;
         case Case::Depart : symbole = 'D';
@@ -222,20 +267,25 @@ void AffichageTexteAmeliore2::afficheCaseXY(const Labyrinthe& labyrinthe, int x,
         case Case::Arrivee : symbole = 'A';
         break;
     }
-    std::cout << symbole;
+    DWORD written;
+    WriteConsoleW(hConsole, &symbole, 1, &written, NULL);
 }
 
 void AffichageTexteAmeliore2::afficheRobot(int direction) const
 {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    wchar_t symbole;
     switch (direction)
     {
-        case Direction::HAUT: std::cout << '^';
+        case Direction::HAUT: symbole = L'▲';
         break;
-        case Direction::DROITE: std::cout << '>';
+        case Direction::DROITE: symbole = L'►';
         break;
-        case Direction::BAS: std::cout << 'v';
+        case Direction::BAS: symbole = L'▼';
         break;
-        case Direction::GAUCHE: std::cout << '<';
+        case Direction::GAUCHE: symbole = L'◄';
         break;
     }
+    DWORD written;
+    WriteConsoleW(hConsole, &symbole, 1, &written, NULL);
 }
