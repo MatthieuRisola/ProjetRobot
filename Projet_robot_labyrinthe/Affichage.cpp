@@ -10,9 +10,8 @@ void Affichage::afficheDepart(const Labyrinthe& labyrinthe, const Robot& robot) 
 
 void Affichage::update(const Labyrinthe& labyrinthe, int ancienX, int ancienY, int nouveauX, int nouveauY, int direction) const
 {
-    //curseur(X = position largeur, Y = [position hauteur) dans cet ordre
+    //positions X Y par rapport a la console daffichage
     goto_xy(ancienX, ancienY);
-    //laby[Y = position hauteur, X = position largeur] dans cet ordre
     afficheCaseXY(labyrinthe,ancienX,ancienY);
     goto_xy(nouveauX, nouveauY);
     afficheRobot(direction);
@@ -156,6 +155,7 @@ void AffichageTexteAmeliore1::afficheRobot(int direction) const
 
 void AffichageTexteAmeliore2::afficheCaseXY(const Labyrinthe& labyrinthe, int x, int y) const
 {
+    //permet laffichage utf8
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     Case::TypeCase c=labyrinthe.typeCase(x,y);
     wchar_t symbole;
@@ -267,6 +267,7 @@ void AffichageTexteAmeliore2::afficheCaseXY(const Labyrinthe& labyrinthe, int x,
         case Case::Arrivee : symbole = 'A';
         break;
     }
+    //permet laffichage utf8
     DWORD written;
     WriteConsoleW(hConsole, &symbole, 1, &written, NULL);
 }
