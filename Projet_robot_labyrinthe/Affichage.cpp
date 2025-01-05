@@ -1,6 +1,6 @@
 #include "Affichage.h"
 #include "goto_xy_windows.h"
-
+#include <windows.h>
 
 void Affichage::afficheDepart(const Labyrinthe& labyrinthe, const Robot& robot) const
 {
