@@ -1,8 +1,10 @@
 #include <iostream>
-#include "Labyrinthe.h"
 #include <conio.h>
-#include "Observateur.h"
+#include <windows.h>
 #include <vector>
+
+#include "Labyrinthe.h"
+#include "Observateur.h"
 #include "Affichage.h"
 #include "DeplacementRobot.h"
 
@@ -187,6 +189,7 @@ void testProgrammePrincipal()
 
 int main()
 {
+    SetConsoleOutputCP(65001);
     //testSelectionAlgorithme();
     //testSelectionLabyrinthe();
     //testSelectionAffichage();
