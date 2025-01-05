@@ -67,7 +67,7 @@
 	<windows.h>
 	"goto_xy_windows.h"
 
-1736072094 source:c:\users\pimbo\onedrive\documents\l3\robot projet\projetrobot\projet_robot_labyrinthe\affichage.cpp
+1736079010 source:c:\users\pimbo\onedrive\documents\l3\robot projet\projetrobot\projet_robot_labyrinthe\affichage.cpp
 	"Affichage.h"
 	"goto_xy_windows.h"
 
@@ -118,11 +118,13 @@
 	<vector>
 	"Labyrinthe.h"
 
-1736005327 source:c:\users\pimbo\onedrive\documents\l3\robot projet\projetrobot\projet_robot_labyrinthe\main.cpp
+1736078664 source:c:\users\pimbo\onedrive\documents\l3\robot projet\projetrobot\projet_robot_labyrinthe\main.cpp
 	<iostream>
 	"Labyrinthe.h"
 	<conio.h>
 	"Observateur.h"
+	<vector>
+	"Affichage.h"
 
 1736005327 source:c:\users\pimbo\onedrive\documents\l3\robot projet\projetrobot\projet_robot_labyrinthe\observateur.cpp
 	"Observateur.h"
