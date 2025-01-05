@@ -7,8 +7,10 @@ class Case
 {
     public:
         enum TypeCase {Vide, Mur, Depart, Arrivee};
+        Case();
         Case(const TypeCase& type);
         TypeCase type() const;
+        std::string typeEnChaine() const;
         void changeType(const TypeCase& type);
     private:
         TypeCase d_type;
@@ -16,9 +18,9 @@ class Case
 
 /** CHANGEMENT
 
-changement entête constructeur -> rajout de const et &
-changement entête méthode type() -> renvoit string et pas un TypeCase
-ajout méthode changeType()
+changement entÃªte constructeur -> rajout de const et &
+changement entÃªte mÃ©thode type() -> renvoit string et pas un TypeCase
+ajout mÃ©thode changeType()
 
 */
 
