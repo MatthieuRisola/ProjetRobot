@@ -134,29 +134,24 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
         if (laby.typeCase(rob.x(), rob.y()) == Case::Arrivee) //peut être bien de faire une fonction qui teste direct case du robot sans avoir besoin d'acceder a ses coordonnees ?
         {
             sortieTrouvee = true;
-            rob.notifieObservateurs();
             continue; // Arrêt logique
         }
 
         if (!rob.obstacleDroite(laby))
         {
             rob.tourneDroite(); // On tourne à droite car pas d'obstacle et on avance
-            rob.notifieObservateurs();
             rob.avance();
-            rob.notifieObservateurs();
             getch();
         }
         else
             if (!rob.obstacleDevant(laby))
             {
                 rob.avance(); // il y a un obstacle à droite mais pas devant donc on avance devant
-                rob.notifieObservateurs();
                 getch();
             }
             else
             {
                 rob.tourneGauche(); //il y a un obstacle à droite et devant donc on tourne à gauche
-                rob.notifieObservateurs();
             }
 
         it++;
@@ -171,7 +166,48 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
 
 void pledge(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
 {
+    auto obsAffichage = std::make_unique<ObservateurAffichage>(aff, laby, rob.x(), rob.y(), rob.direction());
+    auto obsDeplacements = std::make_unique<ObservateurComptageDeplacements>(rob.x(), rob.y());
+    auto obsDirections = std::make_unique<ObservateurComptageDirections>(rob.direction());
+    rob.ajouteObservateur(std::move(obsAffichage));
+    rob.ajouteObservateur(std::move(obsDeplacements));
+    rob.ajouteObservateur(std::move(obsDirections));
 
+    aff.afficheDepart(laby, rob);
+    getch();
+
+    int max_iteration = 1000;
+    int it = 0;
+    int compteur = 0;
+    while (it < max_iteration&&laby.typeCase(rob.x(), rob.y()) != Case::Arrivee){
+        if (compteur == 0){
+            if (!rob.obstacleDevant(laby))
+                rob.avance();
+            else{
+                rob.tourneDroite();
+                ++compteur;
+            }
+        }
+        else if (!rob.obstacleGauche(laby)) {
+                rob.tourneGauche();
+                --compteur;
+                rob.avance();
+        }
+        else if (!rob.obstacleDevant(laby))
+            rob.avance();
+        else{
+            rob.tourneDroite();
+            ++compteur;
+        }
+        getch();
+        it++;
+    }
+
+        if(it>= max_iteration)
+            std::cout << "Maximum d'iteration atteint, ce type d'algorithme n'est pas compatible avec ce labyrinthe" << std::endl;
+        else
+            std::cout << "Le robot a trouvé la sortie !" << std::endl;
+        std::cout << "Nombre total de mouvements : " << it << std::endl;
 }
 
 void initialisationLabyrinthe(Robot &rob, const Labyrinthe &laby, bool &robotCorrect)
@@ -193,7 +229,7 @@ void initialisationLabyrinthe(Robot &rob, const Labyrinthe &laby, bool &robotCor
         }
         ++j;
     }
-    rob = Robot{x,y,HAUT};
+    rob = Robot{x,y,BAS};
     RobotDroit robotD{};
     int compteurNombreTours{0};
     while(compteurNombreTours<4 && rob.obstacleDevant(laby) == true)
@@ -214,7 +250,7 @@ void initialisationLabyrinthe(Robot &rob, const Labyrinthe &laby, bool &robotCor
 void programmePrincipal()
 {
     Labyrinthe laby{selectionLabyrinthe()};
-    Robot rob{0,0,HAUT};
+    Robot rob{0,0,BAS};
     bool robotCorrect{false};
     initialisationLabyrinthe(rob,laby,robotCorrect);
 
@@ -271,6 +307,17 @@ void testAlgoMainDroite()
     std::cout << "Test terminé !" << std::endl;
 }
 
+void testPledge()
+{
+    Labyrinthe laby{};
+    AffichageTexteAmeliore2 aff{};
+    laby.lisDepuisFichier("testpledge.txt");
+    Robot rob{0,0,HAUT};
+    bool coucou=true;
+    initialisationLabyrinthe(rob,laby,coucou);
+    pledge(rob,laby,aff);
+}
+
 int main()
 {
     SetConsoleOutputCP(65001);
@@ -280,37 +327,4 @@ int main()
 
     //testProgrammePrincipal();
     //testAlgoMainDroite();
-
-    Robot r(5,6,Direction::HAUT);
-    AffichageTexteAmeliore1 aff{};
-    Labyrinthe laby{};
-    laby.lisDepuisFichier("testaffichage.txt");
-    aff.afficheDepart(laby, r);
-    ObservateurAffichage obs(aff,laby,r.x(),r.y(),r.direction());
-    r.ajouteObservateur(std::make_unique<ObservateurAffichage>(obs));
-    getch();
-    r.avance();
-    r.notifieObservateurs();
-    getch();
-    r.tourneDroite();
-    r.notifieObservateurs();
-    getch();
-    r.avance();
-    r.notifieObservateurs();
-    getch();
-    r.avance();
-    r.notifieObservateurs();
-    getch();
-    r.avance();
-    r.notifieObservateurs();
-    getch();
-    r.avance();
-    r.notifieObservateurs();
-    getch();
-    r.avance();
-    r.notifieObservateurs();
-    getch();
-    r.avance();
-    r.notifieObservateurs();
-    getch();
 }
