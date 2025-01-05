@@ -69,6 +69,7 @@ void Robot::avance()
       case BAS : ++d_y ; break;
       case GAUCHE : --d_x ; break;
     }
+    notifieObservateurs();
 }
 
 void Robot::tourneGauche()
@@ -80,6 +81,7 @@ void Robot::tourneGauche()
       case BAS : d_direction=DROITE ; break;
       case GAUCHE : d_direction=BAS ; break;
     }
+    notifieObservateurs();
 }
 
 void Robot::tourneDroite()
@@ -91,9 +93,10 @@ void Robot::tourneDroite()
       case BAS : d_direction=GAUCHE ; break;
       case GAUCHE : d_direction=HAUT ; break;
     }
+    notifieObservateurs();
 }
 
-void Robot::affiche(const Affichage &affichage)
+void Robot::affiche(const Affichage &affichage) const
 {
     affichage.afficheRobot(d_direction);
 }
