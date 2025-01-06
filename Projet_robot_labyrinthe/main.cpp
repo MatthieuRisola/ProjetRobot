@@ -12,7 +12,7 @@ using std::cout;
 using std::cin;
 
 const int NUMERO_MAIN_DROITE=1;
-const int NUMERO_PLEDGE=1;
+const int NUMERO_PLEDGE=2;
 
 Labyrinthe selectionLabyrinthe()
 {
@@ -105,6 +105,16 @@ void testSelectionAffichage()
 
 void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
 {
+    auto obsAffichage = std::make_unique<ObservateurAffichage>(aff, laby, rob.x(), rob.y(), rob.direction());
+    auto obsDeplacements = std::make_unique<ObservateurComptageDeplacements>(rob.x(), rob.y());
+    auto obsDirections = std::make_unique<ObservateurComptageDirections>(rob.direction());
+    rob.ajouteObservateur(std::move(obsAffichage));
+    rob.ajouteObservateur(std::move(obsDeplacements));
+    rob.ajouteObservateur(std::move(obsDirections));
+
+    aff.afficheDepart(laby, rob);
+    getch();
+    
     int max_iteration = 1000;
     int it = 0;
 
@@ -115,13 +125,11 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
         if (!rob.obstacleDevant(laby))
         {
             rob.avance();
-            rob.notifieObservateurs();
             getch(); //a voir si on laisse les getch (pck quand tourne en rond c'est long de cliquer)
         }
         else
         {
             rob.tourneGauche(); // Tourner à gauche si bloqué devant
-            rob.notifieObservateurs();
         }
 
         it++;
@@ -161,7 +169,7 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
         std::cout << "Maximum d'iteration atteint, ce type d'algorithme n'est pas compatible avec ce labyrinthe" << std::endl;
     else
         std::cout << "Le robot a trouvé l'arrivee ! " << std::endl;
-
+    std::cout << "Nombre total de mouvements : " << it << std::endl;
 }
 
 void pledge(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
@@ -286,25 +294,13 @@ void testProgrammePrincipal()
 
 void testAlgoMainDroite()
 {
-    SetConsoleOutputCP(65001);
-
     Labyrinthe laby{};
-    laby.lisDepuisFichier("testaffichage.txt");
-
-    Robot r(5,6,Direction::BAS);
-    //bool robotCorrect;
-    //initialisationLabyrinthe(r, laby, robotCorrect);
-
     AffichageTexteAmeliore2 aff{};
-    //aff.afficheDepart(laby, r);
-    laby.afficheAvecRobot(aff, r);
-
-
-    ObservateurAffichage obs(aff,laby,r.x(),r.y(),r.direction());
-    r.ajouteObservateur(std::make_unique<ObservateurAffichage>(obs));
-
-    mainDroite(r, laby, aff);
-    std::cout << "Test terminé !" << std::endl;
+    laby.lisDepuisFichier("testmaindroite.txt");
+    Robot rob{0,0,HAUT};
+    bool coucou=true;
+    initialisationLabyrinthe(rob,laby,coucou);
+    mainDroite(rob,laby,aff);   
 }
 
 void testPledge()
