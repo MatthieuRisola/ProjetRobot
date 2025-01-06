@@ -3,7 +3,7 @@
 #include "DeplacementRobot.h"
 #include "Robot.h"
 
-/*TEST_CASE ("Test des déplacements de Robot")
+TEST_CASE ("Test des déplacements de Robot")
 {
     int x=3;
     int y=5;
@@ -16,4 +16,4 @@
         Avance.manipulate(r);
 
     }
-}*/
+}
