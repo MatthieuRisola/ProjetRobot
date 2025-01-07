@@ -2,6 +2,8 @@
 #include <conio.h>
 #include <windows.h>
 #include <vector>
+#include <thread>
+#include <chrono>
 
 #include "Labyrinthe.h"
 #include "Observateur.h"
@@ -103,6 +105,17 @@ void testSelectionAffichage()
     selectionAffichage(laby);
 }
 
+void initialisationRobot(Robot &rob, const Labyrinthe &laby, const Affichage &aff)
+{
+    auto obsAffichage = std::make_unique<ObservateurAffichage>(aff, laby, rob.x(), rob.y(), rob.direction());
+    auto obsDeplacements = std::make_unique<ObservateurComptageDeplacements>(rob.x(), rob.y());
+    auto obsDirections = std::make_unique<ObservateurComptageDirections>(rob.direction());
+    rob.ajouteObservateur(std::move(obsAffichage));
+    rob.ajouteObservateur(std::move(obsDeplacements));
+    rob.ajouteObservateur(std::move(obsDirections));
+}
+
+
 void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
 {
     auto obsAffichage = std::make_unique<ObservateurAffichage>(aff, laby, rob.x(), rob.y(), rob.direction());
@@ -112,9 +125,16 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
     rob.ajouteObservateur(std::move(obsDeplacements));
     rob.ajouteObservateur(std::move(obsDirections));
 
+    RobotAvance avance{};
+    RobotDroit droit{};
+    RobotGauche gauche{};
+
     aff.afficheDepart(laby, rob);
+    std::cout << "Appuyez sur espace pour commencer" << std::endl;
     getch();
-    
+    system("cls");
+    aff.afficheDepart(laby, rob);
+
     int max_iteration = 1000;
     int it = 0;
 
@@ -124,12 +144,11 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
         //on avance tout droit si pas d'obstacle
         if (!rob.obstacleDevant(laby))
         {
-            rob.avance();
-            getch(); //a voir si on laisse les getch (pck quand tourne en rond c'est long de cliquer)
+            avance.manipulate(rob);
         }
         else
         {
-            rob.tourneGauche(); // Tourner à gauche si bloqué devant
+            gauche.manipulate(rob); // Tourner à gauche si bloqué devant
         }
 
         it++;
@@ -147,19 +166,17 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
 
         if (!rob.obstacleDroite(laby))
         {
-            rob.tourneDroite(); // On tourne à droite car pas d'obstacle et on avance
-            rob.avance();
-            getch();
+            droit.manipulate(rob); // On tourne à droite car pas d'obstacle et on avance
+            avance.manipulate(rob);
         }
         else
             if (!rob.obstacleDevant(laby))
             {
-                rob.avance(); // il y a un obstacle à droite mais pas devant donc on avance devant
-                getch();
+                avance.manipulate(rob); // il y a un obstacle à droite mais pas devant donc on avance devant
             }
             else
             {
-                rob.tourneGauche(); //il y a un obstacle à droite et devant donc on tourne à gauche
+                gauche.manipulate(rob); //il y a un obstacle à droite et devant donc on tourne à gauche
             }
 
         it++;
@@ -169,7 +186,9 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
         std::cout << "Maximum d'iteration atteint, ce type d'algorithme n'est pas compatible avec ce labyrinthe" << std::endl;
     else
         std::cout << "Le robot a trouvé l'arrivee ! " << std::endl;
-    std::cout << "Nombre total de mouvements : " << it << std::endl;
+    std::cout << "Nombre total de déplacements : " << rob.nombreDeplacements() << std::endl;
+    std::cout << "Nombre total de changements de direction : " << rob.nombreDirections() << std::endl;
+    std::cout << "Temps d'éxécution : " << (rob.nombreDeplacements()+rob.nombreDirections())*0.11 << " secondes" << std::endl;
 }
 
 void pledge(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
@@ -181,41 +200,48 @@ void pledge(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
     rob.ajouteObservateur(std::move(obsDeplacements));
     rob.ajouteObservateur(std::move(obsDirections));
 
-    aff.afficheDepart(laby, rob);
-    getch();
+    RobotAvance avance{};
+    RobotDroit droit{};
+    RobotGauche gauche{};
 
+    aff.afficheDepart(laby, rob);
+    std::cout << "Appuyez sur espace pour commencer" << std::endl;
+    getch();
+    system("cls");
+    aff.afficheDepart(laby, rob);
     int max_iteration = 1000;
     int it = 0;
     int compteur = 0;
     while (it < max_iteration&&laby.typeCase(rob.x(), rob.y()) != Case::Arrivee){
         if (compteur == 0){
             if (!rob.obstacleDevant(laby))
-                rob.avance();
+                avance.manipulate(rob);
             else{
-                rob.tourneDroite();
+                droit.manipulate(rob);
                 ++compteur;
             }
         }
         else if (!rob.obstacleGauche(laby)) {
-                rob.tourneGauche();
+                gauche.manipulate(rob);
                 --compteur;
-                rob.avance();
+                avance.manipulate(rob);
         }
         else if (!rob.obstacleDevant(laby))
-            rob.avance();
+            avance.manipulate(rob);
         else{
-            rob.tourneDroite();
+            droit.manipulate(rob);
             ++compteur;
         }
-        getch();
         it++;
     }
 
-        if(it>= max_iteration)
-            std::cout << "Maximum d'iteration atteint, ce type d'algorithme n'est pas compatible avec ce labyrinthe" << std::endl;
-        else
-            std::cout << "Le robot a trouvé la sortie !" << std::endl;
-        std::cout << "Nombre total de mouvements : " << it << std::endl;
+    if(it>= max_iteration)
+        std::cout << "Maximum d'iteration atteint, ce type d'algorithme n'est pas compatible avec ce labyrinthe" << std::endl;
+    else
+        std::cout << "Le robot a trouvé la sortie !" << std::endl;
+    std::cout << "Nombre total de déplacements : " << rob.nombreDeplacements() << std::endl;
+    std::cout << "Nombre total de changements de direction : " << rob.nombreDirections() << std::endl;
+    std::cout << "Temps d'éxécution : " << (rob.nombreDeplacements()+rob.nombreDirections())*0.11 << " secondes" << std::endl;
 }
 
 void initialisationLabyrinthe(Robot &rob, const Labyrinthe &laby, bool &robotCorrect)
@@ -270,6 +296,7 @@ void programmePrincipal()
     }
 
     std::unique_ptr<Affichage> affichage{selectionAffichage(laby)};
+
     int numeroAlgo{selectionAlgorithme()};
 
     if(numeroAlgo == NUMERO_MAIN_DROITE)
@@ -300,7 +327,7 @@ void testAlgoMainDroite()
     Robot rob{0,0,HAUT};
     bool coucou=true;
     initialisationLabyrinthe(rob,laby,coucou);
-    mainDroite(rob,laby,aff);   
+    mainDroite(rob,laby,aff);
 }
 
 void testPledge()
@@ -322,5 +349,6 @@ int main()
     //testSelectionAffichage();
 
     //testProgrammePrincipal();
-    //testAlgoMainDroite();
+    testAlgoMainDroite();
+    //testPledge();
 }
