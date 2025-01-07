@@ -2,8 +2,6 @@
 #include <conio.h>
 #include <windows.h>
 #include <vector>
-#include <thread>
-#include <chrono>
 
 #include "Labyrinthe.h"
 #include "Observateur.h"
