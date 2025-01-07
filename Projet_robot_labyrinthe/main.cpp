@@ -7,7 +7,6 @@
 #include "Observateur.h"
 #include "Affichage.h"
 #include "DeplacementRobot.h"
-#include "Robot.h"
 
 using std::cout;
 using std::cin;
