@@ -47,4 +47,74 @@ TEST_CASE ("Test des déplacements de Robot")
         REQUIRE_EQ(r.x(), xFinal);
         REQUIRE_EQ(r.y(), yFinal);
     }
+
+    SUBCASE("RobotGauche et RobotDroit fonctionne correctement")
+    {
+        int x{3}, y{5}, ancienneDirection, nouvelleDirection;
+
+        SUBCASE("RobotGauche fait tourner le robot a gauche correctement quelque soit sa direction initiale")
+        {
+            SUBCASE("RobotGauche fonctionne correctement quand le robot avait comme direction initiale : HAUT")
+            {
+                ancienneDirection=HAUT;
+                nouvelleDirection=GAUCHE;
+            }
+
+            SUBCASE("RobotGauche fonctionne correctement quand le robot avait comme direction initiale : DROITE")
+            {
+                ancienneDirection=DROITE;
+                nouvelleDirection=HAUT;
+            }
+
+            SUBCASE("RobotGauche fonctionne correctement quand le robot avait comme direction initiale : BAS")
+            {
+                ancienneDirection=BAS;
+                nouvelleDirection=DROITE;
+            }
+
+            SUBCASE("RobotGauche fonctionne correctement quand le robot avait comme direction initiale : GAUCHE")
+            {
+                ancienneDirection=GAUCHE;
+                nouvelleDirection=BAS;
+            }
+
+            Robot r(x,y,ancienneDirection);
+            RobotGauche Gauche{};
+            Gauche.manipulate(r);
+            REQUIRE_EQ(r.direction(), nouvelleDirection);
+        }
+
+
+        SUBCASE("RobotDroit fait tourner le robot a droite correctement quelque soit sa direction initiale")
+        {
+            SUBCASE("RobotDroit fonctionne correctement quand le robot avait comme direction initiale : HAUT")
+            {
+                ancienneDirection=HAUT;
+                nouvelleDirection=DROITE;
+            }
+
+            SUBCASE("RobotDroit fonctionne correctement quand le robot avait comme direction initiale : DROITE")
+            {
+                ancienneDirection=DROITE;
+                nouvelleDirection=BAS;
+            }
+
+            SUBCASE("RobotDroit fonctionne correctement quand le robot avait comme direction initiale : BAS")
+            {
+                ancienneDirection=BAS;
+                nouvelleDirection=GAUCHE;
+            }
+
+            SUBCASE("RobotDroit fonctionne correctement quand le robot avait comme direction initiale : GAUCHE")
+            {
+                ancienneDirection=GAUCHE;
+                nouvelleDirection=HAUT;
+            }
+
+            Robot r(x,y,ancienneDirection);
+            RobotDroit Droite{};
+            Droite.manipulate(r);
+            REQUIRE_EQ(r.direction(), nouvelleDirection);
+        }
+    }
 }
