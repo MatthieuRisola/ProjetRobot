@@ -106,13 +106,6 @@ void Robot::ajouteObservateur(std::unique_ptr<Observateur> obs)
     d_observateurs.push_back(std::move(obs));
 }
 
-/*
-void Robot::enleveObservateur(Observateur* obs) //TODO
-{
-
-}
-*/
-
 
 void Robot::notifieObservateurs()
 {
@@ -122,24 +115,12 @@ void Robot::notifieObservateurs()
     }
 }
 
-int Robot::nombreDeplacements() const
+const ObservateurComptageDeplacements& Robot::observateurDeplacements(int indiceObservateurDeplacements) const
 {
-    for (const auto& obs : d_observateurs) {
-        auto obsDeplacements = dynamic_cast<ObservateurComptageDeplacements*>(obs.get());
-        if (obsDeplacements) {
-            return obsDeplacements->nombreDeplacements();
-        }
-    }
-    return -1;
+    return static_cast<const ObservateurComptageDeplacements&>(*d_observateurs[indiceObservateurDeplacements]);
 }
 
-int Robot::nombreDirections() const
+const ObservateurComptageDirections& Robot::observateurDirections(int indiceObservateurDirections) const
 {
-    for (const auto& obs : d_observateurs) {
-        auto obsDeplacements = dynamic_cast<ObservateurComptageDirections*>(obs.get());
-        if (obsDeplacements) {
-            return obsDeplacements->nombreDirections();
-        }
-    }
-    return -1;
+    return static_cast<const ObservateurComptageDirections&>(*d_observateurs[indiceObservateurDirections]);
 }

@@ -28,10 +28,9 @@ public:
     void affiche(const Affichage &aff) const; //pas de test
 
     void ajouteObservateur(std::unique_ptr<Observateur> obs); //pas de test
-    //void enleveObservateur(Observateur* obs); //TODO si nécessaire
     void notifieObservateurs(); //pas de test
-    int nombreDeplacements() const;
-    int nombreDirections() const;
+    const ObservateurComptageDeplacements& observateurDeplacements(int indiceObservateurDeplacements) const;
+    const ObservateurComptageDirections& observateurDirections(int indiceObservateurDirections) const;
 private:
     int d_x, d_y, d_direction;
     std::vector<std::unique_ptr<Observateur>> d_observateurs;
