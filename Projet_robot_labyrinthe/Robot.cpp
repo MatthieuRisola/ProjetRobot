@@ -114,3 +114,13 @@ void Robot::notifieObservateurs()
         obs->update(d_x,d_y,d_direction);
     }
 }
+
+const ObservateurComptageDeplacements& Robot::observateurDeplacements(int indiceObservateurDeplacements) const
+{
+    return static_cast<const ObservateurComptageDeplacements&>(*d_observateurs[indiceObservateurDeplacements]);
+}
+
+const ObservateurComptageDirections& Robot::observateurDirections(int indiceObservateurDirections) const
+{
+    return static_cast<const ObservateurComptageDirections&>(*d_observateurs[indiceObservateurDirections]);
+}

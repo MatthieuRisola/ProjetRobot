@@ -13,6 +13,8 @@ using std::cin;
 
 const int NUMERO_MAIN_DROITE=1;
 const int NUMERO_PLEDGE=2;
+const int indiceObsDeplacements = 1;
+const int indiceObsDirections = 2;
 
 Labyrinthe selectionLabyrinthe()
 {
@@ -188,9 +190,11 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
         std::cout << "Maximum d'iteration atteint, ce type d'algorithme n'est pas compatible avec ce labyrinthe" << std::endl;
     else
         std::cout << "Le robot a trouvé l'arrivee ! " << std::endl;
-    std::cout << "Nombre total de déplacements : " << rob.nombreDeplacements() << std::endl;
-    std::cout << "Nombre total de changements de direction : " << rob.nombreDirections() << std::endl;
-    std::cout << "Temps d'éxécution : " << (rob.nombreDeplacements()+rob.nombreDirections())*0.11 << " secondes" << std::endl;
+    int nombreDeplacements=rob.observateurDeplacements(indiceObsDeplacements).nombreDeplacements();
+    int nombreDirections=rob.observateurDirections(indiceObsDirections).nombreDirections();
+    std::cout << "Nombre total de déplacements : " << nombreDeplacements << std::endl;
+    std::cout << "Nombre total de changements de direction : " << nombreDirections << std::endl;
+    std::cout << "Temps d'éxécution : " << (nombreDeplacements+nombreDirections)*0.11 << " secondes" << std::endl;
 }
 
 void pledge(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
@@ -240,10 +244,12 @@ void pledge(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
     if(it>= max_iteration)
         std::cout << "Maximum d'iteration atteint, ce type d'algorithme n'est pas compatible avec ce labyrinthe" << std::endl;
     else
-        std::cout << "Le robot a trouvé la sortie !" << std::endl;
-    std::cout << "Nombre total de déplacements : " << rob.nombreDeplacements() << std::endl;
-    std::cout << "Nombre total de changements de direction : " << rob.nombreDirections() << std::endl;
-    std::cout << "Temps d'éxécution : " << (rob.nombreDeplacements()+rob.nombreDirections())*0.11 << " secondes" << std::endl;
+        std::cout << "Le robot a trouvé l'arrivee ! " << std::endl;
+    int nombreDeplacements=rob.observateurDeplacements(indiceObsDeplacements).nombreDeplacements();
+    int nombreDirections=rob.observateurDirections(indiceObsDirections).nombreDirections();
+    std::cout << "Nombre total de déplacements : " << nombreDeplacements << std::endl;
+    std::cout << "Nombre total de changements de direction : " << nombreDirections << std::endl;
+    std::cout << "Temps d'éxécution : " << (nombreDeplacements+nombreDirections)*0.11 << " secondes" << std::endl;
 }
 
 void initialisationLabyrinthe(Robot &rob, const Labyrinthe &laby, bool &robotCorrect)
