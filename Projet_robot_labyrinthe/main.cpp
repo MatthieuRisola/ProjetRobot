@@ -113,6 +113,10 @@ void initialisationRobot(Robot &rob, const Labyrinthe &laby, const Affichage &af
     rob.ajouteObservateur(std::move(obsDirections));
 }
 
+void clearConsole()
+{
+    system("cls"); //ou system("clear"); sur linux/macOS
+}
 
 void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
 {
@@ -130,7 +134,7 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
     aff.afficheDepart(laby, rob);
     std::cout << "Appuyez sur espace pour commencer" << std::endl;
     getch();
-    system("cls");
+    clearConsole();
     aff.afficheDepart(laby, rob);
 
     int max_iteration = 1000;
@@ -205,7 +209,7 @@ void pledge(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
     aff.afficheDepart(laby, rob);
     std::cout << "Appuyez sur espace pour commencer" << std::endl;
     getch();
-    system("cls");
+    clearConsole();
     aff.afficheDepart(laby, rob);
     int max_iteration = 1000;
     int it = 0;
@@ -296,7 +300,7 @@ void programmePrincipal()
     std::unique_ptr<Affichage> affichage{selectionAffichage(laby)};
 
     int numeroAlgo{selectionAlgorithme()};
-
+    clearConsole();
     if(numeroAlgo == NUMERO_MAIN_DROITE)
     {
         mainDroite(rob,laby,*affichage);
@@ -346,7 +350,7 @@ int main()
     //testSelectionLabyrinthe();
     //testSelectionAffichage();
 
-    //testProgrammePrincipal();
-    testAlgoMainDroite();
+    programmePrincipal();
+    //testAlgoMainDroite();
     //testPledge();
 }
