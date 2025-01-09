@@ -3,13 +3,13 @@
 #include "case.h"
 #include <string>
 
-TEST_CASE("Le constructeur par défaut fonctionne")
+TEST_CASE("Le constructeur par dÃ©faut fonctionne")
 {
     Case c{};
     REQUIRE_EQ(c.typeEnChaine(), "Vide");
 }
 
-TEST_CASE("Le constructeur avec paramètres fonctionne")
+TEST_CASE("Le constructeur avec paramÃ¨tre fonctionne")
 {
     Case::TypeCase type = Case::Mur;
     Case c{type};
