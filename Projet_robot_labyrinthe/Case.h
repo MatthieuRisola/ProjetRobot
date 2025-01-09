@@ -16,12 +16,4 @@ class Case
         TypeCase d_type;
 };
 
-/** CHANGEMENT
-
-changement entête constructeur -> rajout de const et &
-changement entête méthode type() -> renvoit string et pas un TypeCase
-ajout méthode changeType()
-
-*/
-
 #endif // CASE_H_INCLUDED
