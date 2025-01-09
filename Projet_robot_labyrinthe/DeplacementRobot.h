@@ -28,10 +28,5 @@ class RobotDroit : public RobotMover
         void manipulate(Robot &r) const override;
 };
 
-/** CHANGEMENT
-nom des classes mit en français pour être cohérent avec méthode de robot
-*/
-
-
 
 #endif // DEPLACEMENTROBOT_H_INCLUDED
