@@ -106,13 +106,6 @@ void Robot::ajouteObservateur(std::unique_ptr<Observateur> obs)
     d_observateurs.push_back(std::move(obs));
 }
 
-/*
-void Robot::enleveObservateur(Observateur* obs) //TODO
-{
-
-}
-*/
-
 
 void Robot::notifieObservateurs()
 {

@@ -28,7 +28,6 @@ public:
     void affiche(const Affichage &aff) const; //pas de test
 
     void ajouteObservateur(std::unique_ptr<Observateur> obs); //pas de test
-    //void enleveObservateur(Observateur* obs); //TODO si nécessaire
     void notifieObservateurs(); //pas de test
     int nombreDeplacements() const;
     int nombreDirections() const;
