@@ -5,8 +5,6 @@
 
 #include <fstream>
 
-// ATTENTION : au debut le robot ne peut pas changer sa direction
-
 TEST_CASE("Robot fonctionne")
 {
     SUBCASE("Robot est cree correctement avec les bonnes donnees")
@@ -242,7 +240,7 @@ TEST_CASE("Robot fonctionne")
             }
         }
     }
-    SUBCASE("Robot avance correctement selon sa direction") //TODO : factoriser par Robot r{x,y,direction} si possible
+    SUBCASE("Robot avance correctement selon sa direction")
     {
         int x{3}, y{5}, direction, xFinal{x}, yFinal{y};
 

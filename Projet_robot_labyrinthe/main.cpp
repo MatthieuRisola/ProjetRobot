@@ -11,8 +11,8 @@
 using std::cout;
 using std::cin;
 
-const int NUMERO_MAIN_DROITE=1;
-const int NUMERO_PLEDGE=2;
+const int NUMERO_MAIN_DROITE = 1;
+const int NUMERO_PLEDGE = 2;
 const int indiceObsDeplacements = 1;
 const int indiceObsDirections = 2;
 
@@ -33,7 +33,7 @@ Labyrinthe selectionLabyrinthe()
     return laby;
 }
 
-std::unique_ptr<Affichage> selectionAffichage(const Labyrinthe &laby) //TO DO : pb d'affichage du texte et des differents affichages
+std::unique_ptr<Affichage> selectionAffichage(const Labyrinthe &laby)
 {
     cout<<"Choix de l'affichage du labyrinthe :"<<std::endl;
     std::vector<std::unique_ptr<Affichage>> tableau{};
@@ -53,7 +53,6 @@ std::unique_ptr<Affichage> selectionAffichage(const Labyrinthe &laby) //TO DO : 
         cout<<"Numero de l'affichage choisi : ";
         cin>>numeroAffichage;
     }while(numeroAffichage<1 || numeroAffichage>3);
-    //cout<<"Numero choisi :"<<numeroAffichage; //pour le test
     return std::move(tableau[numeroAffichage-1]);
 }
 
@@ -75,7 +74,7 @@ int selectionAlgorithme()
     return numeroAlgorithme;
 }
 
-/** Test sur selectionAlgorithme
+/** Tests sur selectionAlgorithme :
         test avec un numero invalide (différent de 1 et 2)
         test avec numero valide (1 ou 2)
         test redemande le nom du fichier quand le fichier n'a pas une case arrivee ou une case depart
@@ -86,7 +85,7 @@ void testSelectionAlgorithme()
     cout<<"Algo choisi final : "<<numeroAlgo;
 }
 
-/** Test sur selectionLabyrinthe
+/** Tests sur selectionLabyrinthe :
     nom de fichier qui n'existe pas
     nom de fichier qui existe
 **/
@@ -95,7 +94,7 @@ void testSelectionLabyrinthe()
     Labyrinthe laby{selectionLabyrinthe()};
 }
 
-/** Test sur selectionAffichage
+/** Tests sur selectionAffichage :
         test avec numero invalide (différent de 1, 2 et 3)
         test avec numero valide (1, 2 ou 3)
 **/
@@ -117,7 +116,7 @@ void initialisationRobot(Robot &rob, const Labyrinthe &laby, const Affichage &af
 
 void clearConsole()
 {
-    system("cls"); //ou system("clear"); sur linux/macOS
+    system("cls"); //ou system("clear") sur linux/macOS
 }
 
 void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
@@ -156,7 +155,7 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
         else
         {
             /** on tourne a gauche si pas d'obstacle a droite et bloque devant (choix défini par notre groupe après nos recherches) */
-            gauche.manipulate(rob); 
+            gauche.manipulate(rob);
         }
 
         it++;
@@ -166,7 +165,7 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
     bool sortieTrouvee = false;
     while (it < max_iteration && !sortieTrouvee)
     {
-        if (laby.typeCase(rob.x(), rob.y()) == Case::Arrivee) 
+        if (laby.typeCase(rob.x(), rob.y()) == Case::Arrivee)
         {
             sortieTrouvee = true;
             continue; // Arrêt logique
@@ -175,19 +174,19 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
         if (!rob.obstacleDroite(laby))
         {
             /** On tourne à droite car pas d'obstacle et on avance*/
-            droit.manipulate(rob); 
+            droit.manipulate(rob);
             avance.manipulate(rob);
         }
         else
             if (!rob.obstacleDevant(laby))
             {
                 /** il y a un obstacle à droite mais pas devant donc on avance (devant) */
-                avance.manipulate(rob); 
+                avance.manipulate(rob);
             }
             else
             {
                 /** il y a un obstacle à droite et devant donc on tourne à gauche */
-                gauche.manipulate(rob); 
+                gauche.manipulate(rob);
             }
 
         it++;
@@ -264,6 +263,7 @@ void initialisationLabyrinthe(Robot &rob, const Labyrinthe &laby, bool &robotCor
 {
     int x,y, i{0}, j{0};
     bool departTrouve=false;
+    /** Chercher position du robot **/
     while((j<laby.hauteur()) && (departTrouve == false))
     {
         i=0;
@@ -281,6 +281,7 @@ void initialisationLabyrinthe(Robot &rob, const Labyrinthe &laby, bool &robotCor
     }
     rob = Robot{x,y,BAS};
     RobotDroit robotD{};
+    /** Verification si robot ne peut se deplacer **/
     int compteurNombreTours{0};
     while(compteurNombreTours<4 && rob.obstacleDevant(laby) == true)
     {
@@ -325,7 +326,7 @@ void programmePrincipal()
     }
 }
 
-/** Tests sur le programme principal dont initialisationLabyrinthe
+/** Tests sur le programme principal dont initialisationLabyrinthe :
     test avec la case depart a differents endroits,la direction initiale de robot est initialise correctement en correlation avec le labyrinthe
     test la position (x,y) de robot est bien initialisee
     test le bon algo est lance apres le choix de l'utilisateur

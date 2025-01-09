@@ -2,11 +2,6 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="maintest.cpp" open="0" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="44" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="Robot.cpp" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="2886" topLine="104" />
@@ -14,21 +9,17 @@
 	</File>
 	<File name="robottest.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="13920" topLine="120" />
+			<Cursor1 position="10640" topLine="325" />
 		</Cursor>
-		<Folding>
-			<Collapse line="27" />
-			<Collapse line="62" />
-			<Collapse line="64" />
-			<Collapse line="100" />
-			<Collapse line="135" />
-			<Collapse line="173" />
-			<Collapse line="208" />
-		</Folding>
 	</File>
-	<File name="Robot.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="maintest.cpp" open="0" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="941" topLine="9" />
+			<Cursor1 position="44" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="Affichage.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="462" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="Labyrinthe.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -36,9 +27,9 @@
 			<Cursor1 position="234" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="Affichage.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Robot.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="462" topLine="0" />
+			<Cursor1 position="941" topLine="9" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

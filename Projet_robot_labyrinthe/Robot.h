@@ -21,14 +21,14 @@ public:
     bool obstacleGauche(const Labyrinthe& laby) const;
     bool obstacleDroite(const Labyrinthe& laby) const;
 
-    void avance(); //TODO : factoriser
+    void avance();
     void tourneGauche();
     void tourneDroite();
 
-    void affiche(const Affichage &aff) const; //pas de test
+    void affiche(const Affichage &aff) const;
 
-    void ajouteObservateur(std::unique_ptr<Observateur> obs); //pas de test
-    void notifieObservateurs(); //pas de test
+    void ajouteObservateur(std::unique_ptr<Observateur> obs);
+    void notifieObservateurs();
     const ObservateurComptageDeplacements& observateurDeplacements(int indiceObservateurDeplacements) const;
     const ObservateurComptageDirections& observateurDirections(int indiceObservateurDirections) const;
 private:
