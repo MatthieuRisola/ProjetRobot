@@ -122,6 +122,7 @@ void clearConsole()
 
 void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
 {
+    /** Declaration et initialisation des observateurs */
     auto obsAffichage = std::make_unique<ObservateurAffichage>(aff, laby, rob.x(), rob.y(), rob.direction());
     auto obsDeplacements = std::make_unique<ObservateurComptageDeplacements>(rob.x(), rob.y());
     auto obsDirections = std::make_unique<ObservateurComptageDirections>(rob.direction());
@@ -133,36 +134,39 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
     RobotDroit droit{};
     RobotGauche gauche{};
 
+    /** Affichage initial du labyrinthe et du robot et attente de l'action de l'utilisateur */
     aff.afficheDepart(laby, rob);
     std::cout << "Appuyez sur espace pour commencer" << std::endl;
     getch();
     clearConsole();
     aff.afficheDepart(laby, rob);
 
-    int max_iteration = 1000;
+    int max_iteration = 300; //a modifier selon la taille du labyrinthe
     int it = 0;
 
-    // Avancer tout droit jusqu'à rencontrer un mur à droite (si il n'y avait pas de mur au depart)
+    /** Premier mouvement - Cas particulier (pas de mur a droite au depart)
+    Avancer tout droit jusqu'à rencontrer un mur à droite */
     while (it < max_iteration && !rob.obstacleDroite(laby)) //si pas d'obstacle à droite
     {
-        //on avance tout droit si pas d'obstacle
         if (!rob.obstacleDevant(laby))
         {
+            /** on avance tout droit car pas d'obstacle */
             avance.manipulate(rob);
         }
         else
         {
-            gauche.manipulate(rob); // Tourner à gauche si bloqué devant
+            /** on tourne a gauche si pas d'obstacle a droite et bloque devant (choix défini par notre groupe après nos recherches) */
+            gauche.manipulate(rob); 
         }
 
         it++;
     }
 
-    // Suivre le mur à droite
+    /** Application du principe de l'algorithme de la main droite */
     bool sortieTrouvee = false;
     while (it < max_iteration && !sortieTrouvee)
     {
-        if (laby.typeCase(rob.x(), rob.y()) == Case::Arrivee) //peut être bien de faire une fonction qui teste direct case du robot sans avoir besoin d'acceder a ses coordonnees ?
+        if (laby.typeCase(rob.x(), rob.y()) == Case::Arrivee) 
         {
             sortieTrouvee = true;
             continue; // Arrêt logique
@@ -170,22 +174,26 @@ void mainDroite(Robot &rob, const Labyrinthe &laby, const Affichage& aff)
 
         if (!rob.obstacleDroite(laby))
         {
-            droit.manipulate(rob); // On tourne à droite car pas d'obstacle et on avance
+            /** On tourne à droite car pas d'obstacle et on avance*/
+            droit.manipulate(rob); 
             avance.manipulate(rob);
         }
         else
             if (!rob.obstacleDevant(laby))
             {
-                avance.manipulate(rob); // il y a un obstacle à droite mais pas devant donc on avance devant
+                /** il y a un obstacle à droite mais pas devant donc on avance (devant) */
+                avance.manipulate(rob); 
             }
             else
             {
-                gauche.manipulate(rob); //il y a un obstacle à droite et devant donc on tourne à gauche
+                /** il y a un obstacle à droite et devant donc on tourne à gauche */
+                gauche.manipulate(rob); 
             }
 
         it++;
     }
 
+    /** Affichage des resultats */
     if(it>= max_iteration)
         std::cout << "Maximum d'iteration atteint, ce type d'algorithme n'est pas compatible avec ce labyrinthe" << std::endl;
     else
