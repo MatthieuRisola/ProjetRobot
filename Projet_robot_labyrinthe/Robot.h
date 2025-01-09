@@ -29,8 +29,6 @@ public:
 
     void ajouteObservateur(std::unique_ptr<Observateur> obs); //pas de test
     void notifieObservateurs(); //pas de test
-    int nombreDeplacements() const;
-    int nombreDirections() const;
 private:
     int d_x, d_y, d_direction;
     std::vector<std::unique_ptr<Observateur>> d_observateurs;

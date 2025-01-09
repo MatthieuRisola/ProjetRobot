@@ -114,25 +114,3 @@ void Robot::notifieObservateurs()
         obs->update(d_x,d_y,d_direction);
     }
 }
-
-int Robot::nombreDeplacements() const
-{
-    for (const auto& obs : d_observateurs) {
-        auto obsDeplacements = dynamic_cast<ObservateurComptageDeplacements*>(obs.get());
-        if (obsDeplacements) {
-            return obsDeplacements->nombreDeplacements();
-        }
-    }
-    return -1;
-}
-
-int Robot::nombreDirections() const
-{
-    for (const auto& obs : d_observateurs) {
-        auto obsDeplacements = dynamic_cast<ObservateurComptageDirections*>(obs.get());
-        if (obsDeplacements) {
-            return obsDeplacements->nombreDirections();
-        }
-    }
-    return -1;
-}
